@@ -1,0 +1,9 @@
+<!-- This is a basic template that generates a list of links to each task in a given list of tasks. -->
+
+<ul class="taskList">
+  {{#each task}}
+    <li>
+      <a href="/task/{{id}}">{{name}}</a>
+    </li>
+  {{/each}}
+</ul>

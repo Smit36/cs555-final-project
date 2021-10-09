@@ -1,0 +1,17 @@
+<!-- This is the main view. The HTML of all templates will be generated in here, replacing the "body" tag on line 11.
+In order to use this, we must use res.render() in our routes, passing in one of our templates. From there, we can provide a "title"
+attribute and any other attributes the template might request. For an example of this, check any file in the routes folder
+that is not index.js. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/public/site.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Welcome to Wellness</h1>
+      {{{body}}}
+    </main>
+  </body>
+</html>
