@@ -1,6 +1,6 @@
 <p>This is an example message until we get our task rendering up and running.</p>
 <a href="/task">Tasks</a>
-<div class="taskForm">
+<div id="taskForm" style="display: none;">
   <form action="/task" method="post" onSubmit="return checkValidation()">
     <h4>Create New Task</h4>
     <p>Task name: <input type="text" name="name" id="name"></p>
@@ -14,4 +14,5 @@
     <button type="submit">Submit</button>
   </form>
 </div>
-<button type="submit">Create Task</button>
+<button onclick="showForm()" id="createTask">Create Task</button>
+{{#if success}}<p id="success">{{success}}</p>{{/if}}

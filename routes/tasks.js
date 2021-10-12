@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
       });
     const { name, points, description, level } = task;
     const newTask = await taskData.addTask(name, points, level, description);
-    res.status(200).json(newTask);
+    res.status(200).render('tasks/home', { success: 'Created Successfully!' });
   } catch (e) {
     res.status(400).render('errors/error', { error: e });
   }
