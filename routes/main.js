@@ -6,7 +6,7 @@ router.get("/", async (req, res) => {
   try {
     res.render("tasks/home", { title: "Wellness" });
   } catch (e) {
-    res.status(500).render("errors/error", { e: e });
+    res.status(500).render("errors/error", { error: e });
   }
 });
 module.exports = router;

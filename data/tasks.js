@@ -1,12 +1,12 @@
-const mongoCollections = require('../config/mongoCollections');
+const mongoCollections = require("../config/mongoCollections");
 const tasks = mongoCollections.tasks;
 
 const createObjectId = (id) => {
-  let { ObjectId } = require('mongodb');
+  let { ObjectId } = require("mongodb");
 
-  if (id === undefined) throw 'Id parameter must be exist';
-  if (typeof id !== 'string' || id.trim().length == 0)
-    throw 'Id must be a string and must not be empty.';
+  if (id === undefined) throw "Id parameter must be exist";
+  if (typeof id !== "string" || id.trim().length == 0)
+    throw "Id must be a string and must not be empty.";
 
   let parsedId = ObjectId(id);
   return parsedId;
@@ -26,9 +26,9 @@ module.exports = {
   },
 
   async getTaskById(id) {
-    if (id === undefined) throw 'You must provide an id.';
-    if (typeof id !== 'string' || id.trim().length == 0 || id.length !== 24)
-      throw 'id must be a type of string and must not be empty and must be a length of 24.';
+    if (id === undefined) throw "You must provide an id.";
+    if (typeof id !== "string" || id.trim().length == 0 || id.length !== 24)
+      throw "id must be a type of string and must not be empty and must be a length of 24.";
 
     const taskCollection = await tasks();
     id = createObjectId(id);
@@ -46,11 +46,11 @@ module.exports = {
       level === undefined ||
       description === undefined
     )
-      throw 'All fields must be provided.';
-    if (typeof name !== 'string') throw 'Name must be string.';
-    if (!parseInt(points)) throw 'Points must be number.';
-    if (!parseInt(level)) throw 'Level must be number';
-    if (typeof description !== 'string') throw 'Description must be string';
+      throw "All fields must be provided.";
+    if (typeof name !== "string") throw "Name must be string.";
+    if (!parseInt(points)) throw "Points must be number.";
+    if (!parseInt(level)) throw "Level must be number";
+    if (typeof description !== "string") throw "Description must be string";
 
     points = parseInt(points);
     level = parseInt(level);
@@ -65,7 +65,7 @@ module.exports = {
     };
 
     const newInsertTask = await taskCollection.insertOne(newTask);
-    if (newInsertTask.insertedCount === 0) throw 'Could not add task';
+    if (newInsertTask.insertedCount === 0) throw "Could not add task";
 
     const newId = newInsertTask.insertedId;
     const task = await this.getTaskById(newId.toString());
