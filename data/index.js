@@ -1,4 +1,7 @@
 const userTask = require('./tasks');
+const users = require('./users');
+
 module.exports = {
-  tasks: userTask,
+	tasks: userTask,
+	users: users
 };
