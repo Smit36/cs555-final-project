@@ -1,6 +1,8 @@
+// some fuinctions for user collection
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
 
+// returns mongodb-approved ObjectId
 const createObjectId = (id) => {
 	let { ObjectId } = require('mongodb');
 
@@ -13,6 +15,7 @@ const createObjectId = (id) => {
 };
 
 module.exports = {
+	// returns all users in js array
 	async getAllUsers() {
 		const userCollection = await users();
 
@@ -29,6 +32,7 @@ module.exports = {
 	},
 
 	async getUserById(id) {
+		// returns one specific user given valid id
 		if (id === undefined) throw 'You must provide an id.';
 		if (
 			typeof id !== 'string' ||
@@ -47,6 +51,7 @@ module.exports = {
 	},
 
 	async addUser(fname, lname, companyEmail) {
+		// adds a user to the collection
 		if (
 			fname === undefined ||
 			lname === undefined ||
