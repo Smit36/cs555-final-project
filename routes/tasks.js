@@ -3,21 +3,27 @@ const router = express.Router();
 
 const data = require('../data');
 const taskData = data.tasks;
-  
+
 router.post('/', async (req, res) => {
   try {
     const task = req.body;
-    if (!task.name) return res.status(400).json({ error: 'You must provide task name' });
-    if (!task.points) return res.status(400).json({ error: 'You must provide task experience count' });
-    if (!task.description) return res.status(400).json({ error: 'You must provide task description' });
+    if (!task.name || task.name.length == 0)
+      return res.render('tasks/home', { name_error: 'You must provide task name' });
+    if (!task.points)
+      return res.render('tasks/home', { points_error: 'You must provide task experience count' });
+    if (!task.description)
+      return res.render('tasks/home', {
+        description_error: 'You must provide task experience count',
+      });
     if (!task.level)
-      return res.status(400).json({ error: 'You must provide task level' });
-    const { name,points,description,level } = task;
-    const newTask = await taskData.addTask(name,points,level,description);
-    res.status(200).json(newTask);
+      return res.render('tasks/home', {
+        level_error: 'You must provide task experience count',
+      });
+    const { name, points, description, level } = task;
+    const newTask = await taskData.addTask(name, points, level, description);
+    res.status(200).render('tasks/home', { success: 'Created Successfully!' });
   } catch (e) {
-    console.log(e);
-    res.status(400).json({ error: e });
+    res.status(400).render('errors/error', { error: e });
   }
 });
 
@@ -31,7 +37,7 @@ router.get('/:id', async (req, res) => {
     if (!task) {
       return res.status(404).json({ error: 'Task not found with provided ID.' });
     }
-    res.status(200).json(task);
+    res.render('tasks/show', { task: task });
   } catch (e) {
     return res.status(400).json({ error: e });
   }
@@ -40,7 +46,8 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const tasks = await taskData.getAllTasks();
-    res.status(200).json(tasks);
+    console.log(tasks);
+    res.render('tasks/list', { title: 'Wellness', task: tasks });
   } catch (e) {
     console.log(e);
     res.status(500).json({ error: e });
