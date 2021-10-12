@@ -31,9 +31,8 @@ module.exports = {
 		return result;
 	},
 
+	// returns one specific user given valid id
 	async getUserById(id) {
-		// returns one specific user given valid id
-
 		// begin error checking on function arguments
 		if (id === undefined) throw 'You must provide an id.';
 		if (
@@ -52,10 +51,8 @@ module.exports = {
 		}
 		return user;
 	},
-
+	// adds a user to the collection
 	async addUser(fname, lname, companyEmail) {
-		// adds a user to the collection
-
 		// begin error checking on function arguments
 		if (
 			fname === undefined ||
