@@ -15,60 +15,6 @@ const createObjectId = (id) => {
   return parsedId;
 };
 
-/**
- * Levels up user based on this
- * Levels        Exp needed for next tier
- * 	1                     50
-    2	                  75
-    3	                  100
-    4	                  150
-    5	                  200
-  After 5           level*100-300
- * @param {String} userID String of the ID of the user in the database.
- * @returns 0 
- */
-const incrementLevel = async (userID) => {
-  const userCollection = await users(); // pulling stuff from database
-  const user = await this.getUserById(userID);
-  const id = createObjectId(userID);
-  let stopleveling = true;
-  while (stopleveling) {
-    //while stopleveling is true loop
-    let levelz = user.level;
-    let newExp = user.currXp;
-    let neededExp;
-    //checks how much exp is needed for next level
-    if (levelz < 6) {
-      if (levelz === 1) {
-        neededExp = 50;
-      } else if (levelz === 2) {
-        neededExp = 75;
-      } else if (levelz === 3) {
-        neededExp = 100;
-      } else if (levelz === 4) {
-        neededExp = 150;
-      } else {
-        neededExp = 200;
-      }
-    } else {
-      neededExp = levelz * 100 - 300;
-    }
-    //checks if exp is enough to level up
-    if (newExp > neededExp) {
-      newExp = newExp - neededExp;
-      const user = userCollection.updateOne(
-        { _id: id },
-        { $inc: { level: 1 } },
-        { currXP: newExp } //updates all values
-      );
-      if (user.modifiedCount === 0) throw "Could not update user experience."; //error checking
-    } else {
-      stopleveling = false; //stops loop if not enough exp
-    }
-  }
-  return 0; //placeholder
-};
-
 module.exports = {
   // returns all users in js array
   /**
@@ -137,7 +83,7 @@ module.exports = {
     // but not supplied as arguments to the function
     let activeTasks = [],
       completedTasks = [],
-      level = 0,
+      level = 1,
       currXP = 0;
 
     // the user obj to be added to the collection
@@ -240,5 +186,59 @@ module.exports = {
     const newUser = await this.getUserById(userID);
     return newUser;
   },
-  incrementLevel,
+  /**
+ * Levels up user based on this
+ * Levels        Exp needed for next tier
+ * 	1                     50
+    2	                  75
+    3	                  100
+    4	                  150
+    5	                  200
+  After 5           level*100-300
+ * @param {String} userID String of the ID of the user in the database.
+ * @returns 0 
+ */
+  async incrementLevel (userID) {
+    const userCollection = await users(); // pulling stuff from database
+    const id = createObjectId(userID);
+    let stopleveling = true;
+    let finalUserObject;
+
+    while (stopleveling) {
+      //while stopleveling is true loop
+      let user = await this.getUserById(userID);
+      let levelz = user.level;
+      let newExp = user.currXP;
+      let neededExp;
+      //checks how much exp is needed for next level
+      if (levelz < 6) {
+        if (levelz === 1) {
+          neededExp = 50;
+        } else if (levelz == 2) {
+          neededExp = 75;
+        } else if (levelz === 3) {
+          neededExp = 100;
+        } else if (levelz === 4) {
+          neededExp = 150;
+        } else {
+          neededExp = 200;
+        }
+      } else {
+        neededExp = levelz * 100 - 300;
+      }
+      //checks if exp is enough to level up
+      if (newExp >= neededExp) {
+        newExp = newExp - neededExp;
+        const user = userCollection.updateOne(
+          { _id: id },
+          { $set: { level: levelz + 1, currXP: newExp } } //updates all values
+        );
+        if (user.modifiedCount === 0) throw "Could not update user experience."; //error checking
+      } else {
+        stopleveling = false; //stops loop if not enough exp
+        finalUserObject = user;
+      }
+    }
+    return finalUserObject; //placeholder
+  }
 };

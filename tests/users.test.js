@@ -84,7 +84,6 @@ describe("update", () => {
 
     const closer = await userData.awardExp(125, old._id);
     const user = await userData.incrementLevel(closer._id.toString());
-    console.log(user.level);
     expect(user.level).toEqual(3);
   });
 });
