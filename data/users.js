@@ -19,8 +19,8 @@ const createObjectId = (id) => {
  * Level 0 task = 25 points.
  * Level 1 task = 50 points.
  * Level 2 task = 100 points.
- * @param {*} taskLevel Number from 0 to 2.
- * @param {*} userID String of the ID of the user in the database.
+ * @param {Number} taskLevel Number from 0 to 2.
+ * @param {String} userID String of the ID of the user in the database.
  */
 const awardExp = async (taskLevel, userID) => {
   // Error checking
