@@ -20,14 +20,13 @@ describe("insert", () => {
 
   afterAll(async () => {
     await connection.close();
-    await db.close();
   });
 
   it("should insert a task into database", async () => {
     const insertedTask = await taskData.addTask(
       "Go for a walk",
       25,
-      0,
+      1,
       "Go for a walk for 10 minutes."
     );
     expect(insertedTask.name).toEqual("Go for a walk");
@@ -49,7 +48,6 @@ describe("insert", () => {
 
   afterAll(async () => {
     await connection.close();
-    await db.close();
   });
 
   it("should insert a task into database", async () => {
@@ -57,7 +55,7 @@ describe("insert", () => {
       await taskData.addTask(
         "Go for a walk",
         25,
-        0,
+        1,
         "Go for a walk for 10 minutes."
       );
       const data = await taskData.getAllTasks();
@@ -83,7 +81,6 @@ describe("insert", () => {
 
   afterAll(async () => {
     await connection.close();
-    await db.close();
   });
 
   it("should insert a task into database", async () => {
@@ -91,7 +88,7 @@ describe("insert", () => {
       const insertedTask = await taskData.addTask(
         "Go for a walk",
         25,
-        0,
+        1,
         "Go for a walk for 10 minutes."
       );
       const task = await taskData.getTaskById(insertedTask._id.toString());
