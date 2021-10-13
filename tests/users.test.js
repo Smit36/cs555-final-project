@@ -1,3 +1,5 @@
+// This is a test script using Jest. Jest is a test automation platform that supports TDD and BDD. This file tests the users database.
+
 const { MongoClient } = require("mongodb");
 const settings = require("../config/settings.json");
 const mongoConfig = settings.mongoConfig;

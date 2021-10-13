@@ -1,5 +1,5 @@
 // some fuinctions for user collection
-const mongoCollections = require('../config/mongoCollections');
+const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
 
 // returns mongodb-approved ObjectId
@@ -23,6 +23,7 @@ const createObjectId = (id) => {
  * @param {*} userID String of the ID of the user in the database.
  */
 const awardExp = async (taskLevel, userID) => {
+  // Error checking
   const id = createObjectId(userID);
   if (
     !taskLevel ||
@@ -35,6 +36,7 @@ const awardExp = async (taskLevel, userID) => {
   let exp;
   const userCollection = await users();
 
+  // level 0 is small, level 1 is medium, level 2 is large.
   if (taskLevel === 0) {
     exp = 25;
   } else if (taskLevel === 1) {
@@ -43,6 +45,7 @@ const awardExp = async (taskLevel, userID) => {
     exp = 100;
   }
 
+  // Increment current experience by the experience given by the taskLevel
   const user = userCollection.updateOne(
     { _id: id },
     { $inc: { currExp: exp } }
@@ -55,9 +58,9 @@ const awardExp = async (taskLevel, userID) => {
 };
 
 module.exports = {
-	// returns all users in js array
-	async getAllUsers() {
-		const userCollection = await users();
+  // returns all users in js array
+  async getAllUsers() {
+    const userCollection = await users();
 
     const userData = await userCollection.find({}).toArray();
     let result = [];
@@ -71,18 +74,14 @@ module.exports = {
     return result;
   },
 
-	async getUserById(id) {
-		// returns one specific user given valid id
+  async getUserById(id) {
+    // returns one specific user given valid id
 
-		// begin error checking on function arguments
-		if (id === undefined) throw 'You must provide an id.';
-		if (
-			typeof id !== 'string' ||
-			id.trim().length == 0 ||
-			id.length !== 24
-		)
-			throw 'id must be a valid ObjectId.';
-		// end error checking on arguments
+    // begin error checking on function arguments
+    if (id === undefined) throw "You must provide an id.";
+    if (typeof id !== "string" || id.trim().length == 0 || id.length !== 24)
+      throw "id must be a valid ObjectId.";
+    // end error checking on arguments
 
     const userCollection = await users();
     id = createObjectId(id);
@@ -93,41 +92,40 @@ module.exports = {
     return user;
   },
 
-	async addUser(fname, lname, companyEmail) {
-		// adds a user to the collection
+  async addUser(fname, lname, companyEmail) {
+    // adds a user to the collection
 
-		// begin error checking on function arguments
-		if (
-			fname === undefined ||
-			lname === undefined ||
-			companyEmail === undefined
-		)
-			throw 'All fields must be provided.';
-		if (typeof fname !== 'string') throw 'Name must be string.';
-		if (typeof lname !== 'string') throw 'Name must be string.';
-		if (typeof companyEmail !== 'string')
-			throw 'Description must be string';
-		// end error checking on arguments
+    // begin error checking on function arguments
+    if (
+      fname === undefined ||
+      lname === undefined ||
+      companyEmail === undefined
+    )
+      throw "All fields must be provided.";
+    if (typeof fname !== "string") throw "Name must be string.";
+    if (typeof lname !== "string") throw "Name must be string.";
+    if (typeof companyEmail !== "string") throw "Description must be string";
+    // end error checking on arguments
 
     const userCollection = await tasks();
 
-		// fields to be added to the user
-		// but not supplied as arguments to the function
-		let activeTasks = [],
-			completedTasks = [],
-			level = 0,
-			currXP = 0;
+    // fields to be added to the user
+    // but not supplied as arguments to the function
+    let activeTasks = [],
+      completedTasks = [],
+      level = 0,
+      currXP = 0;
 
-		// the user obj to be added to the collection
-		const newUser = {
-			fname,
-			lname,
-			companyEmail,
-			activeTasks,
-			completedTasks,
-			level,
-			currXP
-		};
+    // the user obj to be added to the collection
+    const newUser = {
+      fname,
+      lname,
+      companyEmail,
+      activeTasks,
+      completedTasks,
+      level,
+      currXP,
+    };
 
     const newInsertUser = await userCollection.insertOne(newUser);
     if (newInsertUser.insertedCount === 0) throw "Could not add user";
