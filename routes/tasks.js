@@ -4,6 +4,7 @@ const router = express.Router();
 const data = require("../data");
 const taskData = data.tasks;
 
+// The route that sends the results of a form to the server to create a task.
 router.post("/", async (req, res) => {
   try {
     const task = req.body;
@@ -24,13 +25,19 @@ router.post("/", async (req, res) => {
         level_error: "You must provide task experience count",
       });
     const { name, points, description, level } = task;
-    const newTask = await taskData.addTask(name, points, level, description);
-    res.status(200).render("tasks/home", { success: "Created Successfully!" });
+    await taskData.addTask(name, points, level, description);
+    res
+      .status(200)
+      .render("tasks/home", {
+        title: "Wellness",
+        success: "Created Successfully!",
+      });
   } catch (e) {
     res.status(400).render("errors/error", { error: e });
   }
 });
 
+// Sends the HTML page describing a task to the user when directed to the appropriate url.
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -45,12 +52,13 @@ router.get("/:id", async (req, res) => {
         .status(404)
         .json({ error: "Task not found with provided ID." });
     }
-    res.render("tasks/show", { task: task });
+    res.render("tasks/show", { title: task.name, task: task });
   } catch (e) {
     return res.status(400).json({ error: e });
   }
 });
 
+// Gets a list of all tasks in the database and provides it to the user.
 router.get("/", async (req, res) => {
   try {
     const tasks = await taskData.getAllTasks();
