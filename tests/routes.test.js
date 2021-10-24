@@ -5,6 +5,7 @@ const { MongoClient } = require("mongodb");
 const settings = require("../config/settings.json");
 const mongoConfig = settings.mongoConfig;
 const taskData = require("../data/tasks");
+const userData = require("../data/users");
 
 // Unfortunately, there is no way of checking the content of the routes via testing since errors are rendered as HTML pages
 // and finding specific items in the response body is nearly impossible with such a dynamic application. However, we can make sure
@@ -61,6 +62,35 @@ describe("Task route", () => {
     const response = await request(app).get(
       `/task/${insertedTask._id.toString()}`
     );
+    expect(response.statusCode).toBe(200);
+  });
+});
+
+// This test does the same as the other tests, but since it requires information from the database, it has to initialize the database.
+describe("User route", () => {
+  let connection;
+  let db;
+
+  beforeAll(async () => {
+    connection = await MongoClient.connect(mongoConfig.serverUrl, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    db = await connection.db(mongoConfig.database);
+  });
+
+  afterAll(async () => {
+    await db.dropDatabase();
+    await connection.close();
+  });
+
+  it("should get a task and render it properly", async () => {
+    const user = await userData.addUser(
+      "Adam",
+      "Szyluk",
+      "aszyluk@stevens.edu"
+    );
+    const response = await request(app).get(`/profile/${user._id.toString()}`);
     expect(response.statusCode).toBe(200);
   });
 });
