@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"mongoUri":"mongodb://127.0.0.1:57477/"}
-=======
-{"mongoUri":"mongodb://127.0.0.1:58336/"}
->>>>>>> parent of 22b446c... Attempt to fix timeout on tests in Travis CI
+{"mongoUri":"mongodb://127.0.0.1:58619/"}

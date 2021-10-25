@@ -14,9 +14,6 @@ const userData = require("../data/users");
 // All tests will check whether the route sends a valid response since any invalid behavior will return a 500 error.
 
 describe("Main route", () => {
-  beforeAll(() => {
-    setTimeout(60000);
-  });
   it("should send a good response", async () => {
     const response = await request(app).get("/");
     expect(response.statusCode).toBe(200);
@@ -24,9 +21,6 @@ describe("Main route", () => {
 });
 
 describe("Task route", () => {
-  beforeAll(() => {
-    setTimeout(60000);
-  });
   it("should send a good response on post", async () => {
     const response = await request(app).post("/task");
     expect(response.statusCode).toBe(200);
@@ -34,9 +28,6 @@ describe("Task route", () => {
 });
 
 describe("Task route", () => {
-  beforeAll(() => {
-    setTimeout(60000);
-  });
   it("should send a good response on get", async () => {
     const response = await request(app).get("/task");
     expect(response.statusCode).toBe(200);
@@ -49,7 +40,6 @@ describe("Task route", () => {
   let db;
 
   beforeAll(async () => {
-    setTimeout(60000);
     connection = await MongoClient.connect(mongoConfig.serverUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -105,7 +95,6 @@ describe("Task route", () => {
   let db;
 
   beforeAll(async () => {
-    setTimeout(60000);
     connection = await MongoClient.connect(mongoConfig.serverUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -138,7 +127,6 @@ describe("User route", () => {
   let db;
 
   beforeAll(async () => {
-    setTimeout(60000);
     connection = await MongoClient.connect(mongoConfig.serverUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
