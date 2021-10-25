@@ -5,7 +5,7 @@ const settings = require("../config/settings.json");
 const mongoConfig = settings.mongoConfig;
 const userData = require("../data/users");
 
-jest.setTimeout(10000);
+jest.setTimeout(20000);
 
 // Test to add user.
 describe("insert", () => {
