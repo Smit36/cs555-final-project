@@ -7,6 +7,8 @@ const mongoConfig = settings.mongoConfig;
 const taskData = require("../data/tasks");
 const userData = require("../data/users");
 
+jest.setTimeout(10000);
+
 // Unfortunately, there is no way of checking the content of the routes via testing since errors are rendered as HTML pages
 // and finding specific items in the response body is nearly impossible with such a dynamic application. However, we can make sure
 // that the response code is good, which will catch any errors our code itself notices, which I feel is good enough.
