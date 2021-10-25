@@ -26,14 +26,23 @@ router.post("/", async (req, res) => {
       });
     const { name, points, description, level } = task;
     await taskData.addTask(name, points, level, description);
-    res
-      .status(200)
-      .render("tasks/home", {
-        title: "Wellness",
-        success: "Created Successfully!",
-      });
+    res.status(200).render("tasks/home", {
+      title: "Wellness",
+      success: "Created Successfully!",
+    });
   } catch (e) {
     res.status(400).render("errors/error", { error: e });
+  }
+});
+
+// Gets a list of daily tasks and provides it to the user.
+router.get("/daily", async (req, res) => {
+  try {
+    const dailyTasks = await taskData.getDailyTasks();
+    res.render("tasks/list", { title: "Wellness", task: dailyTasks });
+  } catch (e) {
+    console.log(e);
+    res.status(500).render("errors/error", { error: e });
   }
 });
 
@@ -54,7 +63,7 @@ router.get("/:id", async (req, res) => {
     }
     res.render("tasks/show", { title: task.name, task: task });
   } catch (e) {
-    return res.status(400).json({ error: e });
+    return res.status(400).render("errors/error", { error: e });
   }
 });
 
@@ -66,7 +75,7 @@ router.get("/", async (req, res) => {
     res.render("tasks/list", { title: "Wellness", task: tasks });
   } catch (e) {
     console.log(e);
-    res.status(500).json({ error: e });
+    res.status(500).render("errors/error", { error: e });
   }
 });
 
