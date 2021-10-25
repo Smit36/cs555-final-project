@@ -11,6 +11,7 @@ describe("insert", () => {
   let db;
 
   beforeAll(async () => {
+    setTimeout(60000);
     connection = await MongoClient.connect(mongoConfig.serverUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -39,6 +40,7 @@ describe("update", () => {
   let db;
 
   beforeAll(async () => {
+    setTimeout(60000);
     connection = await MongoClient.connect(mongoConfig.serverUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -66,6 +68,7 @@ describe("update", () => {
   let db;
 
   beforeAll(async () => {
+    setTimeout(60000);
     connection = await MongoClient.connect(mongoConfig.serverUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
