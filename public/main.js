@@ -1,10 +1,15 @@
 function showForm() {
-  document.querySelector('#success').style.display = 'none';
   const form = document.getElementById('taskForm');
   let task = document.querySelector('#createTask');
   if (task.innerHTML == 'Create Task') {
+    if (document.querySelector('#success')) {
+      document.querySelector('#success').style.display = 'none';
+    }
     task.innerHTML = 'Close Form';
   } else {
+    if (document.querySelector('#success')) {
+      document.querySelector('#success').style.display = 'none';
+    }
     task.innerHTML = 'Create Task';
   }
   if (form.style.display === 'none') {
@@ -35,3 +40,22 @@ function checkValidation() {
 
   return check;
 }
+
+let level = document.getElementById('level').innerHTML;
+let new_row = document.createElement('div');
+new_row.className = 'row';
+let new_col;
+
+for (let i = 1; i <= level; i++) {
+  let new_div = document.createElement('img');
+  new_div.className = 'badge_img';
+  new_div.src = '/public/badgeImages/level' + i + 'BadgeCircleModified.png';
+
+  new_col = document.createElement('div');
+  new_col.className = 'col-lg-2';
+
+  new_col.appendChild(new_div);
+}
+
+new_row.appendChild(new_col);
+document.getElementsByClassName('badges')[0].appendChild(new_row);
