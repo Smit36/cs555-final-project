@@ -5,8 +5,6 @@ const settings = require("../config/settings.json");
 const mongoConfig = settings.mongoConfig;
 const taskData = require("../data/tasks");
 
-jest.setTimeout(20000);
-
 // Test to add task.
 describe("insert", () => {
   let connection;
