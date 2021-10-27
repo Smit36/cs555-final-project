@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const data = require("../data");
+const data = require('../data');
 const taskData = data.tasks;
 
 // The route that sends the results of a form to the server to create a task.
@@ -9,20 +9,20 @@ router.post("/", async (req, res) => {
   try {
     const task = req.body;
     if (!task.name || task.name.length == 0)
-      return res.render("tasks/home", {
-        name_error: "You must provide task name",
+      return res.render('tasks/home', {
+        name_error: 'You must provide task name',
       });
     if (!task.points)
-      return res.render("tasks/home", {
-        points_error: "You must provide task experience count",
+      return res.render('tasks/home', {
+        points_error: 'You must provide task experience count',
       });
     if (!task.description)
-      return res.render("tasks/home", {
-        description_error: "You must provide task experience count",
+      return res.render('tasks/home', {
+        description_error: 'You must provide task experience count',
       });
     if (!task.level)
-      return res.render("tasks/home", {
-        level_error: "You must provide task experience count",
+      return res.render('tasks/home', {
+        level_error: 'You must provide task experience count',
       });
     const { name, points, description, level } = task;
     await taskData.addTask(name, points, level, description);
@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
       success: "Created Successfully!",
     });
   } catch (e) {
-    res.status(400).render("errors/error", { error: e });
+    res.status(400).render('errors/error', { error: e });
   }
 });
 
@@ -51,15 +51,11 @@ router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     if (!id) {
-      return res
-        .status(400)
-        .json({ error: "Id must be passed as a parameter." });
+      return res.status(400).json({ error: 'Id must be passed as a parameter.' });
     }
     const task = await taskData.getTaskById(id);
     if (!task) {
-      return res
-        .status(404)
-        .json({ error: "Task not found with provided ID." });
+      return res.status(404).json({ error: 'Task not found with provided ID.' });
     }
     res.render("tasks/show", { title: task.name, task: task });
   } catch (e) {
@@ -72,7 +68,7 @@ router.get("/", async (req, res) => {
   try {
     const tasks = await taskData.getAllTasks();
     console.log(tasks);
-    res.render("tasks/list", { title: "Wellness", task: tasks });
+    res.render('tasks/list', { title: 'Wellness', task: tasks });
   } catch (e) {
     console.log(e);
     res.status(500).render("errors/error", { error: e });

@@ -1,15 +1,15 @@
 // some fuinctions for user collection
-const mongoCollections = require("../config/mongoCollections");
-const taskModule = require("./tasks");
+const mongoCollections = require('../config/mongoCollections');
+const taskModule = require('./tasks');
 const users = mongoCollections.users;
 
 // returns mongodb-approved ObjectId
 const createObjectId = (id) => {
-  let { ObjectId } = require("mongodb");
+  let { ObjectId } = require('mongodb');
 
-  if (id === undefined) throw "Id parameter must be exist";
-  if (typeof id !== "string" || id.trim().length == 0)
-    throw "Id must be a string and must not be empty.";
+  if (id === undefined) throw 'Id parameter must be exist';
+  if (typeof id !== 'string' || id.trim().length == 0)
+    throw 'Id must be a string and must not be empty.';
 
   let parsedId = ObjectId(id);
   return parsedId;
@@ -44,9 +44,9 @@ module.exports = {
    */
   async getUserById(id) {
     // begin error checking on function arguments
-    if (id === undefined) throw "You must provide an id.";
-    if (typeof id !== "string" || id.trim().length == 0 || id.length !== 24)
-      throw "id must be a valid ObjectId.";
+    if (id === undefined) throw 'You must provide an id.';
+    if (typeof id !== 'string' || id.trim().length == 0 || id.length !== 24)
+      throw 'id must be a valid ObjectId.';
     // end error checking on arguments
 
     const userCollection = await users();
@@ -66,15 +66,11 @@ module.exports = {
    */
   async addUser(fname, lname, companyEmail) {
     // begin error checking on function arguments
-    if (
-      fname === undefined ||
-      lname === undefined ||
-      companyEmail === undefined
-    )
-      throw "All fields must be provided.";
-    if (typeof fname !== "string") throw "Name must be string.";
-    if (typeof lname !== "string") throw "Name must be string.";
-    if (typeof companyEmail !== "string") throw "Description must be string";
+    if (fname === undefined || lname === undefined || companyEmail === undefined)
+      throw 'All fields must be provided.';
+    if (typeof fname !== 'string') throw 'Name must be string.';
+    if (typeof lname !== 'string') throw 'Name must be string.';
+    if (typeof companyEmail !== 'string') throw 'Description must be string';
     // end error checking on arguments
 
     const userCollection = await users();
@@ -98,7 +94,7 @@ module.exports = {
     };
 
     const newInsertUser = await userCollection.insertOne(newUser);
-    if (newInsertUser.insertedCount === 0) throw "Could not add user";
+    if (newInsertUser.insertedCount === 0) throw 'Could not add user';
 
     const newId = newInsertUser.insertedId;
     const user = await this.getUserById(newId.toString());
@@ -112,30 +108,21 @@ module.exports = {
    */
   async markTaskCompleted(userId, taskId) {
     // error check on userId
-    if (userId === undefined) throw "You must provide a userId.";
-    if (
-      typeof userId !== "string" ||
-      userId.trim().length == 0 ||
-      userId.length !== 24
-    )
-      throw "userId must be a valid ObjectId.";
+    if (userId === undefined) throw 'You must provide a userId.';
+    if (typeof userId !== 'string' || userId.trim().length == 0 || userId.length !== 24)
+      throw 'userId must be a valid ObjectId.';
 
     // error check on taskId
-    if (taskId === undefined) throw "You must provide a taskId.";
-    if (
-      typeof taskId !== "string" ||
-      taskId.trim().length == 0 ||
-      taskId.length !== 24
-    )
-      throw "taskId must be a valid ObjectId.";
+    if (taskId === undefined) throw 'You must provide a taskId.';
+    if (typeof taskId !== 'string' || taskId.trim().length == 0 || taskId.length !== 24)
+      throw 'taskId must be a valid ObjectId.';
 
     const user_to_update = await this.getUserById(userId);
     const task_to_add = await taskModule.getTaskById(taskId);
 
     const newCompletedTasks = user_to_update.completedTasks.push(task_to_add);
-    const newLevel = user_to_update.level + incrementLevel(userId);
-    const newCurrXP =
-      user_to_update.currXP + awardExp(task_to_add.level, userId);
+    const newLevel = user_to_update.level + this.incrementLevel(userId);
+    const newCurrXP = user_to_update.currXP + this.awardExp(task_to_add.level, userId);
 
     const updatedUser = {
       fname: user_to_update.fname,
@@ -148,14 +135,14 @@ module.exports = {
     };
 
     const updatedInfo = await users.updateOne(
-      { _id: ObjectId(id) },
-      { $set: updatedUser }
+      { _id: createObjectId(userId) },
+      { $set: updatedUser },
     );
     if (updatedInfo.modifiedCount === 0) {
-      throw `Could not update user with id ${id}`;
+      throw `Could not update user with id ${userId}`;
     }
 
-    let retVal = await this.getUserById(id);
+    let retVal = await this.getUserById(userId);
     retVal._id = retVal._id.toString();
     return retVal;
   },
@@ -170,18 +157,15 @@ module.exports = {
   async awardExp(exp, userID) {
     // Error checking
     const id = createObjectId(userID);
-    if (!exp || typeof exp !== "number" || exp < 0 || exp % 25 !== 0)
-      throw "Error: Invalid Experience Count";
+    if (!exp || typeof exp !== 'number' || exp < 0 || exp % 25 !== 0)
+      throw 'Error: Invalid Experience Count';
 
     const userCollection = await users();
 
     // Increment current experience by the experience given by the taskLevel
-    const user = await userCollection.updateOne(
-      { _id: id },
-      { $inc: { currXP: exp } }
-    );
+    const user = await userCollection.updateOne({ _id: id }, { $inc: { currXP: exp } });
 
-    if (user.modifiedCount === 0) throw "Could not update user experience.";
+    if (user.modifiedCount === 0) throw 'Could not update user experience.';
 
     const newUser = await this.getUserById(userID);
     return newUser;
@@ -198,7 +182,7 @@ module.exports = {
  * @param {String} userID String of the ID of the user in the database.
  * @returns 0 
  */
-  async incrementLevel (userID) {
+  async incrementLevel(userID) {
     const userCollection = await users(); // pulling stuff from database
     const id = createObjectId(userID);
     let stopleveling = true;
@@ -231,14 +215,14 @@ module.exports = {
         newExp = newExp - neededExp;
         const user = userCollection.updateOne(
           { _id: id },
-          { $set: { level: levelz + 1, currXP: newExp } } //updates all values
+          { $set: { level: levelz + 1, currXP: newExp } }, //updates all values
         );
-        if (user.modifiedCount === 0) throw "Could not update user experience."; //error checking
+        if (user.modifiedCount === 0) throw 'Could not update user experience.'; //error checking
       } else {
         stopleveling = false; //stops loop if not enough exp
         finalUserObject = user;
       }
     }
     return finalUserObject; //placeholder
-  }
+  },
 };

@@ -1,3 +1,45 @@
+body {
+  background: #67b26f; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #4ca2cd, #67b26f); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #4ca2cd,
+    #67b26f
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  padding: 0;
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  color: rgb(61, 55, 55);
+}
 .error {
   color: red;
+}
+.profile .card {
+  border-radius: 10px;
+}
+.badge_img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin: 5px auto;
+  border: 5px solid #ccc;
+  border-radius: 50%;
+}
+.profile_img {
+  width: 150px;
+  height: 150px;
+}
+.profile .card h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.profile .card p {
+  font-size: 16px;
+  color: #000;
+}
+.profile .table th,
+.profile .table td {
+  font-size: 14px;
+  padding: 5px 10px;
+  color: #000;
 }

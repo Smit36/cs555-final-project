@@ -1,2 +1,64 @@
-<!-- TODO: We need a template for the user profile, which will include all variables the user has in the database. This is simple, but I will
-leave it in case someone is currently working on this solution. -->
+<div class="profile py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-transparent text-center">
+            <img class="profile_img" src="/public/male.png" alt="student dp">
+            <h3>{{profile.name}}</h3>
+          </div>
+          <div class="card-body">
+            <p class="mb-0"><strong class="pr-1">Gender:</strong>{{profile.gender}}</p>
+            <p class="mb-0"><strong class="pr-1">Age:</strong>{{profile.age}}</p>
+            <p class="mb-0"><strong class="pr-1">Weight:</strong>{{profile.weight}}</p>
+            <p class="mb-0"><strong class="pr-1">Height:</strong>{{profile.height}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+          <div class="card-header bg-transparent border-0">
+            <h3 class="mb-0"><i class="far fa-clone pr-1"></i>General Information</h3>
+          </div>
+          <div class="card-body pt-0">
+            <table class="table table-bordered">
+              <tr>
+                <th width="30%">Active Tasks</th>
+                <td width="2%">:</td>
+                <td>{{profile.activeTasks}}</td>
+              </tr>
+              <tr>
+                <th width="30%">Completed Tasks</th>
+                <td width="2%">:</td>
+                <td>{{profile.completedTasks}}</td>
+              </tr>
+              <tr>
+                <th width="30%">Level</th>
+                <td width="2%">:</td>
+                <td id="level">{{profile.level}}</td>
+              </tr>
+              <tr>
+                <th width="30%">Current XP</th>
+                <td width="2%">:</td>
+                <td>{{profile.currXP}}</td>
+              </tr>
+              <tr>
+                <th width="30%">BMI</th>
+                <td width="2%">:</td>
+                <td>{{profile.bmi}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div style="height: 26px"></div>
+        <div class="card shadow-sm">
+          <div class="card-header bg-transparent border-0">
+            <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Badges</h3>
+          </div>
+          <div class="card-body">
+            <div class="badges">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
