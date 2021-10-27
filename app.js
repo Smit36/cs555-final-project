@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const static = express.static(__dirname + "/public");
+const staticPath = express.static(__dirname + "/public");
 
 // The below packages will be required for a future secure login system.
 //const bcrypt = require('bcrypt');
@@ -10,16 +10,18 @@ const static = express.static(__dirname + "/public");
 const configRoutes = require("./routes");
 const exphbs = require("express-handlebars");
 
-app.use("/public", static);
+// Here, we define the path we are going to use in order to serve static files to the user.
+app.use("/public", staticPath);
+
+// Here, we accept middleware functions that handle JSON objects and URL encoded bodies.
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Here, we set handlebars to be the view engine of choice, allowing us to generate HTML.
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+// This lets us set up our routes.
 configRoutes(app);
 
-app.listen(3000, () => {
-  console.log("We've now got a server!");
-  console.log("Your routes will be running on http://localhost:3000");
-});
+module.exports = app;

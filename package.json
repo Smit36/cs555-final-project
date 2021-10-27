@@ -4,8 +4,9 @@
   "description": "A gamefied mental health website.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "jest"
+    "start": "node server.js",
+    "test": "jest -w=4 --forceExit",
+    "seed": "node tests/seed.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^2.1.0",
-    "jest": "^27.2.5"
+    "jest": "^27.2.5",
+    "supertest": "^6.1.6"
   }
 }

@@ -19,6 +19,7 @@ describe("insert", () => {
   });
 
   afterAll(async () => {
+    await db.dropDatabase();
     await connection.close();
   });
 
@@ -46,6 +47,7 @@ describe("update", () => {
   });
 
   afterAll(async () => {
+    await db.dropDatabase();
     await connection.close();
   });
 
@@ -72,6 +74,7 @@ describe("update", () => {
   });
 
   afterAll(async () => {
+    await db.dropDatabase();
     await connection.close();
   });
 
