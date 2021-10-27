@@ -67,7 +67,6 @@ router.get("/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const tasks = await taskData.getAllTasks();
-    console.log(tasks);
     res.render('tasks/list', { title: 'Wellness', task: tasks });
   } catch (e) {
     console.log(e);
