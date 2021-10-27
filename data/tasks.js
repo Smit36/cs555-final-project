@@ -94,4 +94,30 @@ module.exports = {
     const task = await this.getTaskById(newId.toString());
     return task;
   },
+
+  /**
+   * Returns a random list of daily tasks that follows the format of 3 small, 2 medium, and 1 large.
+   * @returns Array of daily tasks
+   */
+  async getDailyTasks() {
+    const taskCollection = await tasks();
+
+    let small = await taskCollection
+      .aggregate([{ $match: { points: 25 } }, { $sample: { size: 3 } }])
+      .toArray();
+    let medium = await taskCollection
+      .aggregate([{ $match: { points: 50 } }, { $sample: { size: 2 } }])
+      .toArray();
+    let large = await taskCollection
+      .aggregate([{ $match: { points: 100 } }, { $sample: { size: 1 } }])
+      .toArray();
+    const taskData = small.concat(medium, large);
+    if (!taskData) throw "Error: Could not get daily tasks.";
+    let result = [];
+    for (let i = 0; i < taskData.length; i++) {
+      result.push({ _id: taskData[i]._id.toString(), name: taskData[i].name });
+    }
+
+    return result;
+  },
 };
