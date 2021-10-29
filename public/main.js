@@ -58,4 +58,6 @@ for (let i = 1, j = 1; i <= level; i = j * 5, j++) {
   new_row.appendChild(new_col);
 }
 
-document.getElementsByClassName('badges')[0].appendChild(new_row);
+if (document.getElementsByClassName('badges')) {
+  document.getElementsByClassName('badges')[0].appendChild(new_row);
+}
