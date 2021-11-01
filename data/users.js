@@ -64,7 +64,7 @@ module.exports = {
    * @param {string} companyEmail user's unique companyEmail
    * @returns userObj after inserted into collection
    */
-  async addUser(fname, lname, companyEmail) {
+  async addUser(fname, lname, username, hashedpassword, companyEmail) {
     // begin error checking on function arguments
     if (fname === undefined || lname === undefined || companyEmail === undefined)
       throw 'All fields must be provided.';

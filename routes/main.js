@@ -19,20 +19,22 @@ router.get('/signup', async (req,res) => {
 });
 
 router.post('/signup', async (req,res) => {
-  let {email, username, password, confirmpassword} = req.body;
+  let {email, username, password, confirmpassword, lname, fname} = req.body;
   email = xss(email);
   username=xss(username);
   password=xss(password);
   confirmpassword=xss(confirmpassword);
-  
+  fname = xss(fname);
+  lname = xss(lname);
+
   if (!email || typeof(email) !== 'string' || email.trim().length == 0) {
       return res.status(400).render("signup.handlebars", {title: "Sign up failed", errormsg: "Error: Email not provided or is not a valid string."});
   }
-  try {
+  /*try {
       errorChecker.ValidateEmail(email);
   } catch(e) {
       return res.status(400).render("signup.handlebars", {title: "Sign up failed", errormsg: "Error: Please enter a valid E-mail."});
-  }
+  }*/
   if (!username || typeof(username) !== "string" || username.trim().length == 0) {
       return res.status(400).render("signup.handlebars", {title: "Sign up failed", errormsg: "Error: Username not provided or is not a valid string."});
   }
@@ -48,7 +50,7 @@ router.post('/signup', async (req,res) => {
   const realusername = username.toLowerCase();
   const hashPassword = await bcrypt.hash(password, saltRounds);
   try {
-      await usersDatabase.createUser("user", realusername, hashPassword, email);
+      await usersDatabase.addUser(fname, lname, realusername, hashPassword, email);
   } catch (e){
       return res.status(500).render("signupError.handlebars", {title: "Sign up failed", error: e});
   }
