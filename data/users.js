@@ -65,10 +65,12 @@ module.exports = {
 	 * creates a new user, adding them to the collection
 	 * @param {string} fname user's first name
 	 * @param {string} lname user's last name
+	 * @param {string} username user's username
+	 * @param {string} hashedPassword user's hashed password
 	 * @param {string} companyEmail user's unique companyEmail
 	 * @returns userObj after inserted into collection
 	 */
-	async addUser(fname, lname, username, hashedpassword, companyEmail) {
+	async addUser(fname, lname, username, hashedPassword, companyEmail) {
 		// begin error checking on function arguments
 		if (
 			fname === undefined ||
@@ -84,15 +86,18 @@ module.exports = {
 
 		const userCollection = await users();
 
-		const checkEmail = userCollection.findOne({
-			companyEmail: companyEmail
+		const emailChecker = new RegExp(`^${companyEmail}$`, "i");
+		const userChecker = new RegExp(`^${username}$`, "i");
+
+		const checkEmail = await userCollection.findOne({
+			companyEmail: emailChecker
 		});
 		if (checkEmail) {
 			throw `Email ${companyEmail} is already registered to an account`;
 		}
 
-		const checkUsername = userCollection.findOne({
-			username: username
+		const checkUsername = await userCollection.findOne({
+			username: userChecker
 		});
 		if (checkUsername) {
 			throw `Username ${username} is already taken`;
@@ -109,12 +114,13 @@ module.exports = {
 		const newUser = {
 			firstName: fname,
 			lastName: lname,
+			username: username,
+			hashedPassword: hashedPassword,
 			companyEmail: companyEmail,
-			activeTasks: activeTasks,
-			completedtasks: completedTasks,
 			level: level,
 			currXP: currXP,
-			hashedpassword: hashedpassword
+			activeTasks: activeTasks,
+			completedtasks: completedTasks
 		};
 
 		const newInsertUser = await userCollection.insertOne(newUser);
