@@ -31,7 +31,7 @@ describe('insert', () => {
 			'sample_hashed_password',
 			'aszyluk@stevens.edu'
 		);
-		expect(insertedUser.fname).toEqual('Adam');
+		expect(insertedUser.firstName).toEqual('Adam');
 	});
 });
 

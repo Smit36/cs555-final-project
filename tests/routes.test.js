@@ -155,6 +155,7 @@ describe('User route', () => {
 		const response = await request(app).get(
 			`/profile/${user._id.toString()}`
 		);
+		console.log(user._id.toString());
 		expect(response.statusCode).toBe(200);
 	});
 });
