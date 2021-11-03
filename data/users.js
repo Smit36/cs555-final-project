@@ -75,6 +75,8 @@ module.exports = {
 		if (
 			fname === undefined ||
 			lname === undefined ||
+			username === undefined ||
+			hashedPassword === undefined ||
 			companyEmail === undefined
 		)
 			throw 'All fields must be provided.';
@@ -86,8 +88,8 @@ module.exports = {
 
 		const userCollection = await users();
 
-		const emailChecker = new RegExp(`^${companyEmail}$`, "i");
-		const userChecker = new RegExp(`^${username}$`, "i");
+		const emailChecker = new RegExp(`^${companyEmail}$`, 'i');
+		const userChecker = new RegExp(`^${username}$`, 'i');
 
 		const checkEmail = await userCollection.findOne({
 			companyEmail: emailChecker
