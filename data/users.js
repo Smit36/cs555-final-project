@@ -2,6 +2,7 @@
 const mongoCollections = require('../config/mongoCollections');
 const taskModule = require('./tasks');
 const users = mongoCollections.users;
+const bcrypt = require('bcrypt');
 
 // returns mongodb-approved ObjectId
 const createObjectId = (id) => {
@@ -271,5 +272,42 @@ module.exports = {
 			}
 		}
 		return finalUserObject; //placeholder
+	},
+	/**
+	 * compares username/password to users in DB
+	 * @param {string} username plaintext username
+	 * @param {string} password plaintext password
+	 * @returns the user's DB entry upon success
+	 */
+	async validateUser(username, password) {
+		//begin validation
+		if (username === undefined || password === undefined)
+			throw 'Arguments not supplied';
+		if (typeof username != 'string' || typeof password != 'string')
+			throw 'arguments not strings';
+		//end validation
+
+		const userCollection = await users();
+		let attemptedUser = await userCollection.findOne({
+			username: username
+		});
+
+		// we manually set this field  when the username is not found
+		// so that we throw an error only once, so that it cannot
+		// be determined if the username was valid
+		if (attemptedUser === undefined) {
+			attemptedUser = { hashedPassword: '0' };
+		}
+
+		const passwordsMatch = await bcrypt.compareSync(
+			password,
+			attemptedUser.hashedPassword
+		);
+
+		if (!passwordsMatch) {
+			throw 'invalid username/password combo';
+		} else {
+			return attemptedUser;
+		}
 	}
 };
