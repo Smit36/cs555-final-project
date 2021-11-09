@@ -152,39 +152,3 @@ describe("User route", () => {
     expect(response.statusCode).toBe(403);
   });
 });
-
-describe("User route", () => {
-  let connection;
-  let db;
-
-  beforeAll(async () => {
-    connection = await MongoClient.connect(mongoConfig.serverUrl, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    db = await connection.db(mongoConfig.database);
-  });
-
-  afterAll(async () => {
-    await db.dropDatabase();
-    await connection.close();
-  });
-
-  it("should get a task and render it properly", async () => {
-    const user = await userData.addUser(
-      "Adam",
-      "Szyluk",
-      "adams",
-      "sample_hashed_password",
-      "aszyluk@stevens.edu"
-    );
-    req.session.user = {
-      id: user._id,
-      username: user.username,
-      hashedPassword: user.hashedPassword,
-    };
-    const response = await request(app).get(`/profile/${user._id.toString()}`);
-    console.log(user._id.toString());
-    expect(response.statusCode).toBe(200);
-  });
-});
