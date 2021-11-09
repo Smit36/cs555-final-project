@@ -13,18 +13,69 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Lato", sans-serif;
-  color: rgb(61, 55, 55);
+  color: white;
 }
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  height: 100px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+button {
+  background-color: white;
+  border: 2px solid #4CAF50;;
+  border-radius: 4px;
+  color: black;
+  padding: 5px 14px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  transition-duration: 0.4s;
+}
+
+button:hover{
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+.taskLink{
+  border: 2px solid rgb(9, 130, 230);
+  color:rgb(9, 130, 230);
+}
+
+.taskLink:hover{
+  background-color: rgb(9, 130, 230);
+  color:white;
+}
+
+.taskDelete{
+  border: 2px solid rgb(224, 13, 13);
+  color:rgb(224, 13, 13);
+}
+
+.taskDelete:hover{
+  background-color: rgb(224, 13, 13);
+  color:white;
+}
+
 .error {
   color: red;
 }
-.taskLink {
-  color: black;
+
+.card h4{
+  color:darkorange
 }
 
-.taskLink:hover {
-  color: darkorange;
-}
 .profile .card {
   border-radius: 10px;
 }
@@ -46,11 +97,25 @@ body {
 }
 .profile .card p {
   font-size: 16px;
-  color: #000;
+  color: white;
 }
 .profile .table th,
 .profile .table td {
   font-size: 14px;
   padding: 5px 10px;
-  color: #000;
+  color: white;
+}
+
+.home{
+  text-align: center;
+}
+form {
+  overflow: hidden;  
+  background-color: white;
+  width:50%;
+}
+
+input {
+  float: right;
+  width: calc(100% - 500px);
 }
