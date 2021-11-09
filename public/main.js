@@ -44,18 +44,20 @@ function checkValidation() {
 let level = document.getElementById('level').innerHTML;
 let new_row = document.createElement('div');
 new_row.className = 'row';
-let new_col;
 
-for (let i = 1; i <= level; i++) {
+for (let i = 1, j = 1; i <= level; i = j * 5, j++) {
   let new_div = document.createElement('img');
   new_div.className = 'badge_img';
+  console.log('/public/badgeImages/level' + i + 'BadgeCircleModified.png');
   new_div.src = '/public/badgeImages/level' + i + 'BadgeCircleModified.png';
 
-  new_col = document.createElement('div');
+  let new_col = document.createElement('div');
   new_col.className = 'col-lg-2';
 
   new_col.appendChild(new_div);
+  new_row.appendChild(new_col);
 }
 
-new_row.appendChild(new_col);
-document.getElementsByClassName('badges')[0].appendChild(new_row);
+if (document.getElementsByClassName('badges')) {
+  document.getElementsByClassName('badges')[0].appendChild(new_row);
+}
