@@ -1,18 +1,20 @@
-<p>This is an example message until we get our task rendering up and running.</p>
-<a href="/task">Tasks</a>
-<div id="taskForm" style="display: none;">
-  <form action="/task" method="post" onSubmit="return checkValidation()">
-    <h4>Create New Task</h4>
-    <p>Task name: <input type="text" name="name" id="name"></p>
-    {{#if name_error}}<span class="error" id="name-error">{{name_error}}</span>{{/if}}
-    <p>Description: <input type="textbox" name="description" id="description"></p>
-    {{#if description_error}}<span class="error" id="description-error">{{description_error}}</span>{{/if}}
-    <p>Experience count: <input type="number" name="points" id="points"></p>
-    {{#if points_error}}<span class="error" id="points-error">{{points_error}}</span>{{/if}}
-    <p>Level: <input type="number" name="level" id="level"></p>
-    {{#if level_error}}<span class="error" id="level-error">{{level_error}}</span>{{/if}}
-    <button type="submit">Submit</button>
-  </form>
+<div class="home">
+  <a href="/task"><button>Tasks</button></a>
+  <a href="/profile"><button>Profile</button></a>
+  <div id="taskForm" style="display: none;">
+    <form action="/task" method="post" onSubmit="return checkValidation()">
+      <h4>Create New Task</h4>
+      <p>Task name: <input type="text" name="name" id="name"></p>
+      {{#if name_error}}<span class="error" id="name-error">{{name_error}}</span>{{/if}}
+      <p>Description: <input type="textbox" name="description" id="description"></p>
+      {{#if description_error}}<span class="error" id="description-error">{{description_error}}</span>{{/if}}
+      <p>Experience count: <input type="number" name="points" id="points"></p>
+      {{#if points_error}}<span class="error" id="points-error">{{points_error}}</span>{{/if}}
+      <p>Level: <input type="number" name="level" id="level"></p>
+      {{#if level_error}}<span class="error" id="level-error">{{level_error}}</span>{{/if}}
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <button onclick="showForm()" id="createTask">Create Task</button>
+  {{#if success}}<p id="success">{{success}}</p>{{/if}}
 </div>
-<button onclick="showForm()" id="createTask">Create Task</button>
-{{#if success}}<p id="success">{{success}}</p>{{/if}}
