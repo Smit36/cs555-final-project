@@ -1,5 +1,6 @@
-const mongoCollections = require('../config/mongoCollections');
+const mongoCollections = require("../config/mongoCollections");
 const tasks = mongoCollections.tasks;
+
 const users = mongoCollections.users;
 const verify = require('../inputVerification');
 
@@ -9,9 +10,11 @@ const verify = require('../inputVerification');
  * @returns An ObjectID.
  */
 const createObjectId = (id) => {
+
   let { ObjectId } = require('mongodb');
 
   // verify.standard.verifyArg(id, 'id', 'tasks/createObjectId', 'objectId');
+
 
   let parsedId = ObjectId(id);
   return parsedId;
@@ -22,6 +25,7 @@ module.exports = {
    * Gets all tasks from the database.
    * @returns An object array of all tasks in the database.
    */
+
   async getAllTasks(userId) {
     // verify.standard.argDNE(arg, 'getAllTasks');
     const userCollection = await users();
@@ -34,6 +38,7 @@ module.exports = {
       result.push({
         _id: userData[0].activeTasks[i]._id.toString(),
         name: userData[0].activeTasks[i].name,
+
       });
     }
 
@@ -46,7 +51,9 @@ module.exports = {
    * @returns Object of a task.
    */
   async getTaskById(id) {
+
     // verify.standard.verifyArg(id, 'id', 'getTaskById', 'objectId');
+
 
     const taskCollection = await tasks();
     id = createObjectId(id);
@@ -71,6 +78,7 @@ module.exports = {
     // verify.standard.verifyArg(level, 'level', 'addTask', 'number');
     // verify.standard.verifyArg(description, 'description', 'addTask', 'string');
 
+
     points = parseInt(points);
     level = parseInt(level);
 
@@ -82,12 +90,10 @@ module.exports = {
       points,
       level,
       description,
-      category: 'user',
-      select: true,
     };
 
     const newInsertTask = await taskCollection.insertOne(newTask);
-    if (newInsertTask.insertedCount === 0) throw 'Could not add task';
+    if (newInsertTask.insertedCount === 0) throw "Could not add task";
 
     const newId = newInsertTask.insertedId;
     const user = await userCollection.findOne({ _id: createObjectId(userId) });
@@ -110,6 +116,7 @@ module.exports = {
   async getDailyTasks(arg) {
     // verify.standard.argDNE(arg, 'getDailyTasks');
 
+
     const taskCollection = await tasks();
 
     let small = await taskCollection
@@ -122,7 +129,7 @@ module.exports = {
       .aggregate([{ $match: { points: 100 } }, { $sample: { size: 1 } }])
       .toArray();
     const taskData = small.concat(medium, large);
-    if (!taskData) throw 'Error: Could not get daily tasks.';
+    if (!taskData) throw "Error: Could not get daily tasks.";
     let result = [];
     for (let i = 0; i < taskData.length; i++) {
       result.push({
