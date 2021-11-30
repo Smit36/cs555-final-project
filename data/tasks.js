@@ -1,5 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const tasks = mongoCollections.tasks;
+const users = mongoCollections.users;
 const verify = require('../inputVerification');
 
 /**
@@ -23,15 +24,16 @@ module.exports = {
    */
   async getAllTasks(userId) {
     // verify.standard.argDNE(arg, 'getAllTasks');
-    const taskCollection = await tasks();
+    const userCollection = await users();
 
-    const taskData = await taskCollection.find({ userId: userId, select: true }).toArray();
-    if (!taskData) throw 'Error: Could not get all tasks.';
+    const userData = await userCollection.find({ _id: createObjectId(userId) }).toArray();
+    if (!userData) throw 'Error: Could not get all tasks.';
     let result = [];
-    for (let i = 0; i < taskData.length; i++) {
+    console.log(userData);
+    for (let i = 0; i < userData[0].activeTasks.length; i++) {
       result.push({
-        _id: taskData[i]._id.toString(),
-        name: taskData[i].name,
+        _id: userData[0].activeTasks[i]._id.toString(),
+        name: userData[0].activeTasks[i].name,
       });
     }
 
@@ -73,9 +75,9 @@ module.exports = {
     level = parseInt(level);
 
     const taskCollection = await tasks();
+    const userCollection = await users();
 
     const newTask = {
-      userId,
       name,
       points,
       level,
@@ -88,7 +90,16 @@ module.exports = {
     if (newInsertTask.insertedCount === 0) throw 'Could not add task';
 
     const newId = newInsertTask.insertedId;
+    const user = await userCollection.findOne({ _id: createObjectId(userId) });
+    if (user) {
+      user._id = user._id.toString();
+    }
     const task = await this.getTaskById(newId.toString());
+    user.activeTasks.push(task);
+    await userCollection.updateOne(
+      { _id: createObjectId(userId) },
+      { $set: { activeTasks: user.activeTasks } },
+    );
     return task;
   },
 

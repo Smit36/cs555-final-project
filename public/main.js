@@ -72,6 +72,11 @@ function handleSchizophrenia() {
   }
 }
 
+function completeTask() {
+  let task = document.querySelector('#completeTask');
+  task.innerHTML = 'Completed';
+}
+
 function checkValidation() {
   let check = true;
   if (document.getElementById('name').value.length == 0) {

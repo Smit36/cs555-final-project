@@ -3,10 +3,14 @@ const router = express.Router();
 
 const data = require('../data');
 const taskData = data.tasks;
+const userData = data.users;
 
 // The route that sends the results of a form to the server to create a task.
 router.post('/', async (req, res) => {
   try {
+    if (!req.session.user.id) {
+      return res.redirect('/signup');
+    }
     const task = req.body;
     if (!task.name || task.name.length == 0)
       return res.render('tasks/home', {
@@ -36,13 +40,14 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/completeTask/:id', async (req, res) => {
   try {
     if (!req.session.user) {
       return res.redirect('/signup');
     }
-    const { anxiety, disorder, depression, schizo } = req.body;
-    await taskData.selectTasks(req.session.user.id, anxiety, disorder, depression, schizo);
+    console.log('hi');
+    const { id: taskId } = req.params;
+    await userData.markTaskCompleted(req.session.user.id, taskId);
     return res.redirect('/task');
   } catch (e) {
     console.log(e);

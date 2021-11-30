@@ -122,27 +122,31 @@ module.exports = {
    * @returns updated user object
    */
   async markTaskCompleted(userId, taskId) {
-    verify.standard.verifyArg(userId, 'userId', 'markTaskCompleted', 'objectId');
-    verify.standard.verifyArg(taskId, 'taskId', 'markTaskCompleted', 'objectId');
-
+    // verify.standard.verifyArg(userId, 'userId', 'markTaskCompleted', 'objectId');
+    // verify.standard.verifyArg(taskId, 'taskId', 'markTaskCompleted', 'objectId');
+    const userCollection = await users();
     const user_to_update = await this.getUserById(userId);
     const task_to_add = await taskModule.getTaskById(taskId);
 
-    const newCompletedTasks = user_to_update.completedTasks.push(task_to_add);
-    const newLevel = user_to_update.level + this.incrementLevel(userId);
-    const newCurrXP = user_to_update.currXP + this.awardExp(task_to_add.level, userId);
-
+    user_to_update.completedtasks.push(task_to_add);
+    // const newLevel = user_to_update.level + this.incrementLevel(userId);
+    // const newCurrXP = user_to_update.currXP + this.awardExp(task_to_add.level, userId);
+    const expUser = await this.awardExp(task_to_add.points, userId);
+    const levelUser = await this.incrementLevel(expUser._id.toString());
+    const newTasks = user_to_update.activeTasks.filter((e) => {
+      return e._id !== taskId;
+    });
     const updatedUser = {
       fname: user_to_update.fname,
       lname: user_to_update.lname,
       companyEmail: user_to_update.companyEmail,
-      activeTasks: user_to_update.activeTasks,
-      completedTasks: newCompletedTasks,
-      level: newLevel,
-      currXP: newCurrXP,
+      activeTasks: newTasks,
+      completedtasks: user_to_update.completedtasks,
+      level: levelUser.level,
+      currXP: levelUser.currXP,
     };
 
-    const updatedInfo = await users.updateOne(
+    const updatedInfo = await userCollection.updateOne(
       { _id: createObjectId(userId) },
       { $set: updatedUser },
     );
