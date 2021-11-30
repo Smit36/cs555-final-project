@@ -1,12 +1,11 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
+const verify = require('../inputVerification');
 
 const createObjectId = (id) => {
   let { ObjectId } = require('mongodb');
 
-  if (id === undefined) throw 'Id parameter must be exist';
-  if (typeof id !== 'string' || id.trim().length == 0)
-    throw 'Id must be a string and must not be empty.';
+  verify.standard.verifyArg(id, 'id', 'profile/createObjectId', 'objectId');
 
   let parsedId = ObjectId(id);
   return parsedId;
@@ -14,9 +13,7 @@ const createObjectId = (id) => {
 
 module.exports = {
   async createProfile(userId) {
-    if (userId === undefined) throw 'You must provide an userId.';
-    if (typeof userId !== 'string' || userId.trim().length == 0 || userId.length !== 24)
-      throw 'userId must be a type of string and must not be empty and must be a length of 24.';
+    verify.standard.verifyArg(userId, 'userId', 'createProfile', 'objectId');
 
     const userCollection = await users();
     userId = createObjectId(userId);
