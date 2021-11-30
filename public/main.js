@@ -24,7 +24,7 @@ function showForm() {
 
 function handleDepression() {
   let property = document.getElementById('depression');
-  if (property.style.backgroundColor == 'white') {
+  if (document.getElementById('depressionCheck').value == '') {
     property.style.backgroundColor = 'rgb(9, 130, 230)';
     property.style.color = 'white';
     document.getElementById('depressionCheck').value = 'true';
@@ -37,7 +37,7 @@ function handleDepression() {
 
 function handleAnxiety() {
   let property = document.getElementById('anxiety');
-  if (property.style.backgroundColor == 'white') {
+  if (document.getElementById('anxietyCheck').value == '') {
     property.style.backgroundColor = 'rgb(9, 130, 230)';
     property.style.color = 'white';
     document.getElementById('anxietyCheck').value = 'true';
@@ -49,7 +49,7 @@ function handleAnxiety() {
 }
 function handleEatingDisorder() {
   let property = document.getElementById('disorder');
-  if (property.style.backgroundColor == 'white') {
+  if (document.getElementById('disorderCheck').value == '') {
     property.style.backgroundColor = 'rgb(9, 130, 230)';
     property.style.color = 'white';
     document.getElementById('disorderCheck').value = 'true';
@@ -61,7 +61,7 @@ function handleEatingDisorder() {
 }
 function handleSchizophrenia() {
   let property = document.getElementById('schizo');
-  if (property.style.backgroundColor == 'white') {
+  if (document.getElementById('schizoCheck').value == '') {
     property.style.backgroundColor = 'rgb(9, 130, 230)';
     property.style.color = 'white';
     document.getElementById('schizoCheck').value = 'true';

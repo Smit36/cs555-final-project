@@ -31,7 +31,22 @@ router.post('/', async (req, res) => {
       success: 'Created Successfully!',
     });
   } catch (e) {
+    console.log(e);
     res.status(400).render('errors/error', { error: e });
+  }
+});
+
+router.post('/', async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.redirect('/signup');
+    }
+    const { anxiety, disorder, depression, schizo } = req.body;
+    await taskData.selectTasks(req.session.user.id, anxiety, disorder, depression, schizo);
+    return res.redirect('/task');
+  } catch (e) {
+    console.log(e);
+    res.status(500).render('errors/error', { error: e });
   }
 });
 
@@ -83,8 +98,9 @@ router.post('/selectTask', async (req, res) => {
       return res.redirect('/signup');
     }
     const { anxiety, disorder, depression, schizo } = req.body;
-    console.log(anxiety);
-  } catch {
+    await taskData.selectTasks(req.session.user.id, anxiety, disorder, depression, schizo);
+    return res.redirect('/task');
+  } catch (e) {
     console.log(e);
     res.status(500).render('errors/error', { error: e });
   }
