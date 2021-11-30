@@ -3,14 +3,12 @@ const mongoCollections = require('../config/mongoCollections');
 const taskModule = require('./tasks');
 const users = mongoCollections.users;
 const bcrypt = require('bcrypt');
+const verify = require('../inputVerification');
 
 // returns mongodb-approved ObjectId
 const createObjectId = (id) => {
 	let { ObjectId } = require('mongodb');
-
-	if (id === undefined) throw 'Id parameter must be exist';
-	if (typeof id !== 'string' || id.trim().length == 0)
-		throw 'Id must be a string and must not be empty.';
+	verify.standard.verifyArg(id, 'id', 'users/createObjectId', 'objectId');
 
 	let parsedId = ObjectId(id);
 	return parsedId;
@@ -22,7 +20,8 @@ module.exports = {
 	 * outputs all users in the collection
 	 * @returns array containing all users in collection
 	 */
-	async getAllUsers() {
+	async getAllUsers(arg) {
+		verify.standard.argDNE(arg, 'getAllUsers');
 		const userCollection = await users();
 
 		const userData = await userCollection.find({}).toArray();
@@ -44,15 +43,7 @@ module.exports = {
 	 * @returns user with provided ObjectId
 	 */
 	async getUserById(id) {
-		// begin error checking on function arguments
-		if (id === undefined) throw 'You must provide an id.';
-		if (
-			typeof id !== 'string' ||
-			id.trim().length == 0 ||
-			id.length !== 24
-		)
-			throw 'id must be a valid ObjectId.';
-		// end error checking on arguments
+		verify.standard.verifyArg(id, 'id', 'getUserById', 'objectId');
 
 		const userCollection = await users();
 		id = createObjectId(id);
@@ -72,20 +63,21 @@ module.exports = {
 	 * @returns userObj after inserted into collection
 	 */
 	async addUser(fname, lname, username, hashedPassword, companyEmail) {
-		// begin error checking on function arguments
-		if (
-			fname === undefined ||
-			lname === undefined ||
-			username === undefined ||
-			hashedPassword === undefined ||
-			companyEmail === undefined
-		)
-			throw 'All fields must be provided.';
-		if (typeof fname !== 'string') throw 'Name must be string.';
-		if (typeof lname !== 'string') throw 'Name must be string.';
-		if (typeof companyEmail !== 'string')
-			throw 'Description must be string';
-		// end error checking on arguments
+		verify.standard.verifyArg(fname, 'fname', 'addUser', 'string');
+		verify.standard.verifyArg(lname, 'lname', 'addUser', 'string');
+		verify.standard.verifyArg(username, 'username', 'addUser', 'string');
+		verify.standard.verifyArg(
+			hashedPassword,
+			'hashedPassword',
+			'addUser',
+			'string'
+		);
+		verify.standard.verifyArg(
+			companyEmail,
+			'companyEmail',
+			'addUser',
+			'string'
+		);
 
 		const userCollection = await users();
 
@@ -140,23 +132,18 @@ module.exports = {
 	 * @returns updated user object
 	 */
 	async markTaskCompleted(userId, taskId) {
-		// error check on userId
-		if (userId === undefined) throw 'You must provide a userId.';
-		if (
-			typeof userId !== 'string' ||
-			userId.trim().length == 0 ||
-			userId.length !== 24
-		)
-			throw 'userId must be a valid ObjectId.';
-
-		// error check on taskId
-		if (taskId === undefined) throw 'You must provide a taskId.';
-		if (
-			typeof taskId !== 'string' ||
-			taskId.trim().length == 0 ||
-			taskId.length !== 24
-		)
-			throw 'taskId must be a valid ObjectId.';
+		verify.standard.verifyArg(
+			userId,
+			'userId',
+			'markTaskCompleted',
+			'objectId'
+		);
+		verify.standard.verifyArg(
+			taskId,
+			'taskId',
+			'markTaskCompleted',
+			'objectId'
+		);
 
 		const user_to_update = await this.getUserById(userId);
 		const task_to_add = await taskModule.getTaskById(taskId);
@@ -203,6 +190,8 @@ module.exports = {
 		if (!exp || typeof exp !== 'number' || exp < 0 || exp % 25 !== 0)
 			throw 'Error: Invalid Experience Count';
 
+		verify.standard.verifyArg(userID, 'userID', 'awardExp', 'objectId');
+
 		const userCollection = await users();
 
 		// Increment current experience by the experience given by the taskLevel
@@ -230,6 +219,13 @@ module.exports = {
  * @returns 0 
  */
 	async incrementLevel(userID) {
+		verify.standard.verifyArg(
+			userID,
+			'userID',
+			'incrementLevel',
+			'objectId'
+		);
+
 		const userCollection = await users(); // pulling stuff from database
 		const id = createObjectId(userID);
 		let stopleveling = true;
@@ -281,10 +277,18 @@ module.exports = {
 	 */
 	async validateUser(username, password) {
 		//begin validation
-		if (username === undefined || password === undefined)
-			throw 'Arguments not supplied';
-		if (typeof username != 'string' || typeof password != 'string')
-			throw 'arguments not strings';
+		verify.standard.verifyArg(
+			username,
+			'username',
+			'validateUser',
+			'string'
+		);
+		verify.standard.verifyArg(
+			password,
+			'password',
+			'validateUser',
+			'string'
+		);
 		//end validation
 
 		const userCollection = await users();
