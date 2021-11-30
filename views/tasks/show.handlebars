@@ -10,7 +10,9 @@
       <p><strong>How to do: </strong>{{task.description}}</p>
       <p><strong>Points: </strong>{{task.points}}</p>
       <p><strong>Level: </strong>{{task.level}}</p>
-      <a href="/task/{{_id}}"><button class="taskLink">Completed</button></a>
+      <form action="/task/completeTask/{{task._id}}" method="post" id="completeTask" onSubmit="return completeTask()">
+        <button type="submit" id="complete">Complete</button>
+      </form>
     </div>
   </div>
 </div>

@@ -5,7 +5,7 @@ const verify = require('../inputVerification');
 const createObjectId = (id) => {
   let { ObjectId } = require('mongodb');
 
-  verify.standard.verifyArg(id, 'id', 'profile/createObjectId', 'objectId');
+  //verify.standard.verifyArg(id, 'id', 'profile/createObjectId', 'objectId');
 
   let parsedId = ObjectId(id);
   return parsedId;
@@ -13,7 +13,7 @@ const createObjectId = (id) => {
 
 module.exports = {
   async createProfile(userId) {
-    verify.standard.verifyArg(userId, 'userId', 'createProfile', 'objectId');
+    //verify.standard.verifyArg(userId, 'userId', 'createProfile', 'objectId');
 
     const userCollection = await users();
     userId = createObjectId(userId);
