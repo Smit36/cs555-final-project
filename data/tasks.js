@@ -22,6 +22,7 @@ module.exports = {
    * Gets all tasks from the database.
    * @returns An object array of all tasks in the database.
    */
+
   async getAllTasks(userId) {
     // verify.standard.argDNE(arg, 'getAllTasks');
     const userCollection = await users();
@@ -82,8 +83,6 @@ module.exports = {
       points,
       level,
       description,
-      category: 'user',
-      select: true,
     };
 
     const newInsertTask = await taskCollection.insertOne(newTask);

@@ -135,4 +135,13 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/logout', async (req, res) => {
+  try {
+    req.session.destroy();
+    return res.redirect('/login');
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 module.exports = router;

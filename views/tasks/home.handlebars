@@ -1,4 +1,5 @@
 <div class="home">
+  <a href="/logout"><button>Log Out</button></a>
   <h2>Hi, {{name}}!</h2>
   <a href="/task"><button>Tasks</button></a>
   <a href="/profile"><button>Profile</button></a>
@@ -23,7 +24,7 @@
   <div id="question">
     <h3>What problem are you facing?</h3>
     <form action="/task/selectTask" method="post" id="selectTask">
-      <input id="depressionCheck" name="depression" type="hidden" value='' />
+      <input id="depressionCheck" name="depression" type="hidden" value='' ; />
       <div onclick="handleDepression()" id="depression" class="selectTasks">Depression</div>
 
       <input id="anxietyCheck" name="anxiety" type="hidden" value='' />
