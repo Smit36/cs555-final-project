@@ -1,5 +1,9 @@
 const mongoCollections = require('../config/mongoCollections');
 const tasks = mongoCollections.tasks;
+<<<<<<< HEAD
+=======
+
+>>>>>>> a72aa504bcc4e4244050a408d2644c06e7fe64ae
 const users = mongoCollections.users;
 const verify = require('../inputVerification');
 
