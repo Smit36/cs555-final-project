@@ -25,11 +25,7 @@ const buildErrMsg = function buildErrMsg(argName, err, funName) {
  * @param {string} funName the name of the function this argument is being called from
  */
 const argExists = function argExists(arg, argName, funName) {
-	let errStr = this.buildErrMsg(
-		argName,
-		'required argument is missing',
-		funName
-	);
+	let errStr = buildErrMsg(argName, 'required argument is missing', funName);
 
 	if (arg === undefined) throw new Error(errStr);
 };
@@ -40,11 +36,7 @@ const argExists = function argExists(arg, argName, funName) {
  * @param {string} funName the name of the function this argument is being called from
  */
 const isArray = function isArray(arg, argName, funName) {
-	let errStr = this.buildErrMsg(
-		argName,
-		'argument is not an array',
-		funName
-	);
+	let errStr = buildErrMsg(argName, 'argument is not an array', funName);
 
 	if (!Array.isArray(arg)) throw new Error(errStr);
 };
@@ -56,11 +48,7 @@ const isArray = function isArray(arg, argName, funName) {
  * @param {string} funName the name of the function this argument is being called from
  */
 const isObj = function isObj(arg, argName, funName) {
-	let errStr = this.buildErrMsg(
-		argName,
-		'argument is not an object',
-		funName
-	);
+	let errStr = buildErrMsg(argName, 'argument is not an object', funName);
 
 	if (typeof arg !== 'object' || arg === null || Array.isArray(arg))
 		throw new Error(errStr);
@@ -74,7 +62,7 @@ const isObj = function isObj(arg, argName, funName) {
  * @param {string} desiredType type to check against
  */
 const isType = function isType(arg, argName, funName, desiredType) {
-	let errStr = this.buildErrMsg(
+	let errStr = buildErrMsg(
 		argName,
 		`argument is not of desired type (${desiredType})`,
 		funName
@@ -116,7 +104,7 @@ const isType = function isType(arg, argName, funName, desiredType) {
  * @param {string} funName the name of the function this argument is being called from
  */
 const isObjId = function isObjId(id, argName, funName) {
-	let errStr = this.buildErrMsg(
+	let errStr = buildErrMsg(
 		argName,
 		'argument is not a valid mongoDB ObjectId',
 		funName
@@ -136,7 +124,7 @@ const isObjId = function isObjId(id, argName, funName) {
  * @param {string} funName the name of the function this argument is being called from
  */
 const strNotBlanks = function strNotBlanks(str, argName, funName) {
-	let errStr = this.buildErrMsg(
+	let errStr = buildErrMsg(
 		argName,
 		'argument cannot be a blank string',
 		funName
@@ -155,11 +143,7 @@ const strNotBlanks = function strNotBlanks(str, argName, funName) {
  * @param {string} funName the name of the function this argument is being called from
  */
 const arrNotEmpty = function arrNotEmpty(arr, argName, funName) {
-	let errStr = this.buildErrMsg(
-		argName,
-		'argument is an empty array',
-		funName
-	);
+	let errStr = buildErrMsg(argName, 'argument is an empty array', funName);
 
 	if (arr.length === 0) throw new Error(errStr);
 };
@@ -171,11 +155,7 @@ const arrNotEmpty = function arrNotEmpty(arr, argName, funName) {
  * @param {string} funName the name of the function this argument is being called from
  */
 const objIsNotEmpty = function objIsNotEmpty(obj, argName, funName) {
-	let errStr = this.buildErrMsg(
-		argName,
-		'argument is an empty object',
-		funName
-	);
+	let errStr = buildErrMsg(argName, 'argument is an empty object', funName);
 
 	if (Object.keys(obj).length === 0) throw new Error(errStr);
 };
