@@ -5,7 +5,7 @@ const data = require('../data');
 const taskData = data.tasks;
 
 // The route that sends the results of a form to the server to create a task.
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const task = req.body;
     if (!task.name || task.name.length == 0)
@@ -25,10 +25,10 @@ router.post("/", async (req, res) => {
         level_error: 'You must provide task experience count',
       });
     const { name, points, description, level } = task;
-    await taskData.addTask(name, points, level, description);
-    res.status(200).render("tasks/home", {
-      title: "Wellness",
-      success: "Created Successfully!",
+    await taskData.addTask(req.session.user.id, name, points, level, description);
+    res.status(200).render('tasks/home', {
+      title: 'Wellness',
+      success: 'Created Successfully!',
     });
   } catch (e) {
     res.status(400).render('errors/error', { error: e });
@@ -36,18 +36,18 @@ router.post("/", async (req, res) => {
 });
 
 // Gets a list of daily tasks and provides it to the user.
-router.get("/daily", async (req, res) => {
+router.get('/daily', async (req, res) => {
   try {
     const dailyTasks = await taskData.getDailyTasks();
-    res.render("tasks/list", { title: "Wellness", task: dailyTasks });
+    res.render('tasks/list', { title: 'Wellness', task: dailyTasks });
   } catch (e) {
     console.log(e);
-    res.status(500).render("errors/error", { error: e });
+    res.status(500).render('errors/error', { error: e });
   }
 });
 
 // Sends the HTML page describing a task to the user when directed to the appropriate url.
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     if (!id) {
@@ -57,20 +57,36 @@ router.get("/:id", async (req, res) => {
     if (!task) {
       return res.status(404).json({ error: 'Task not found with provided ID.' });
     }
-    res.render("tasks/show", { title: task.name, task: task });
+    res.render('tasks/show', { title: task.name, task: task });
   } catch (e) {
-    return res.status(400).render("errors/error", { error: e });
+    return res.status(400).render('errors/error', { error: e });
   }
 });
 
 // Gets a list of all tasks in the database and provides it to the user.
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const tasks = await taskData.getAllTasks();
+    if (!req.session.user) {
+      return res.redirect('/signup');
+    }
+    const tasks = await taskData.getAllTasks(req.session.user.id);
     res.render('tasks/list', { title: 'Wellness', task: tasks });
   } catch (e) {
     console.log(e);
-    res.status(500).render("errors/error", { error: e });
+    res.status(500).render('errors/error', { error: e });
+  }
+});
+
+router.post('/selectTask', async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.redirect('/signup');
+    }
+    const { anxiety, disorder, depression, schizo } = req.body;
+    console.log(anxiety);
+  } catch {
+    console.log(e);
+    res.status(500).render('errors/error', { error: e });
   }
 });
 

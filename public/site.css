@@ -112,7 +112,7 @@ button:hover{
 form {
   overflow: hidden;  
   background-color: white;
-  width:50%;
+  width:100%;
 }
 
 input {
