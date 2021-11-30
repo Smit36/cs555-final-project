@@ -4,9 +4,13 @@ const router = express.Router();
 const data = require('../data');
 const profileData = data.profile;
 
-router.get('/:userId', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const { userId } = req.params;
+    if (!req.session.user) {
+      return res.redirect('/signup');
+    }
+    const userId = req.session.user.id;
+    console.log(userId);
     const profile = await profileData.createProfile(userId);
     res.status(200).render('users/profile', { profile });
   } catch (e) {

@@ -1,5 +1,6 @@
 function showForm() {
   const form = document.getElementById('taskForm');
+  const question = document.getElementById('question');
   let task = document.querySelector('#createTask');
   if (task.innerHTML == 'Create Task') {
     if (document.querySelector('#success')) {
@@ -14,8 +15,60 @@ function showForm() {
   }
   if (form.style.display === 'none') {
     form.style.display = 'block';
+    question.style.display = 'none';
   } else {
     form.style.display = 'none';
+    question.style.display = 'block';
+  }
+}
+
+function handleDepression() {
+  let property = document.getElementById('depression');
+  if (property.style.backgroundColor == 'white') {
+    property.style.backgroundColor = 'rgb(9, 130, 230)';
+    property.style.color = 'white';
+    document.getElementById('depressionCheck').value = 'true';
+  } else {
+    property.style.backgroundColor = 'white';
+    property.style.color = 'black';
+    document.getElementById('depressionCheck').value = '';
+  }
+}
+
+function handleAnxiety() {
+  let property = document.getElementById('anxiety');
+  if (property.style.backgroundColor == 'white') {
+    property.style.backgroundColor = 'rgb(9, 130, 230)';
+    property.style.color = 'white';
+    document.getElementById('anxietyCheck').value = 'true';
+  } else {
+    property.style.backgroundColor = 'white';
+    property.style.color = 'black';
+    document.getElementById('anxietyCheck').value = '';
+  }
+}
+function handleEatingDisorder() {
+  let property = document.getElementById('disorder');
+  if (property.style.backgroundColor == 'white') {
+    property.style.backgroundColor = 'rgb(9, 130, 230)';
+    property.style.color = 'white';
+    document.getElementById('disorderCheck').value = 'true';
+  } else {
+    property.style.backgroundColor = 'white';
+    property.style.color = 'black';
+    document.getElementById('disorderCheck').value = '';
+  }
+}
+function handleSchizophrenia() {
+  let property = document.getElementById('schizo');
+  if (property.style.backgroundColor == 'white') {
+    property.style.backgroundColor = 'rgb(9, 130, 230)';
+    property.style.color = 'white';
+    document.getElementById('schizoCheck').value = 'true';
+  } else {
+    property.style.backgroundColor = 'white';
+    property.style.color = 'black';
+    document.getElementById('schizoCheck').value = '';
   }
 }
 
