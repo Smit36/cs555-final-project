@@ -1,4 +1,5 @@
 <a href="/logout"><button>Log Out</button></a>
+<button onclick="location.href='/'" type='button'>Back</button>
 <div class="profile py-4">
   <div class="container">
     <div class="row">
@@ -6,7 +7,7 @@
         <div class="card shadow-sm">
           <div class="card-header bg-transparent text-center">
             <img class="profile_img" src="/public/male.png" alt="student dp">
-            <h3>{{profile.name}}</h3>
+            <h1>{{profile.name}}</h1>
           </div>
           <div class="card-body">
             <p class="mb-0"><strong class="pr-1">Gender:</strong>{{profile.gender}}</p>
@@ -19,7 +20,7 @@
       <div class="col-lg-8">
         <div class="card shadow-sm">
           <div class="card-header bg-transparent border-0">
-            <h3 class="mb-0"><i class="far fa-clone pr-1"></i>General Information</h3>
+            <h2 class="mb-0"><i class="far fa-clone pr-1"></i>General Information</h2>
           </div>
           <div class="card-body pt-0">
             <table class="table table-bordered">

@@ -6,14 +6,14 @@
   <a href="/task/daily"><button>Daily Task</button></a>
   <div id="taskForm" style="display: none;">
     <form action="/task" method="post" onSubmit="return checkValidation()">
-      <h4>Create New Task</h4>
-      <p>Task name: <input type="text" name="name" id="name"></p>
+      <h2>Create New Task</h2>
+      <p><label for="name">Task name:</label><input type="text" name="name" id="name"></p>
       {{#if name_error}}<span class="error" id="name-error">{{name_error}}</span>{{/if}}
-      <p>Description: <input type="textbox" name="description" id="description"></p>
+      <p><label for="description">Description:</label> <input type="textbox" name="description" id="description"></p>
       {{#if description_error}}<span class="error" id="description-error">{{description_error}}</span>{{/if}}
-      <p>Experience count: <input type="number" name="points" id="points"></p>
+      <p><label for="points">Experience count:</label><input type="number" name="points" id="points"></p>
       {{#if points_error}}<span class="error" id="points-error">{{points_error}}</span>{{/if}}
-      <p>Level: <input type="number" name="level" id="level"></p>
+      <p><label for="level">Level:</label><input type="number" name="level" id="level"></p>
       {{#if level_error}}<span class="error" id="level-error">{{level_error}}</span>{{/if}}
       <button type="submit">Submit</button>
     </form>
@@ -22,4 +22,13 @@
   {{#if success}}<p id="success">{{success}}</p>{{/if}}
   <br />
   <br />
+  <img src="../public/badgeImages/logo-modified.png" alt="logo" class="centerimage resize">
+  <pre>
+░██╗░░░░░░░██╗███████╗██╗░░░░░██╗░░░░░███╗░░██╗███████╗░██████╗░██████╗
+░██║░░██╗░░██║██╔════╝██║░░░░░██║░░░░░████╗░██║██╔════╝██╔════╝██╔════╝
+░╚██╗████╗██╔╝█████╗░░██║░░░░░██║░░░░░██╔██╗██║█████╗░░╚█████╗░╚█████╗░
+░░████╔═████║░██╔══╝░░██║░░░░░██║░░░░░██║╚████║██╔══╝░░░╚═══██╗░╚═══██╗
+░░╚██╔╝░╚██╔╝░███████╗███████╗███████╗██║░╚███║███████╗██████╔╝██████╔╝
+░░░╚═╝░░░╚═╝░░╚══════╝╚══════╝╚══════╝╚═╝░░╚══╝╚══════╝╚═════╝░╚═════╝░</pre>
+  <br>
 </div>

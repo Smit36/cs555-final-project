@@ -62,6 +62,7 @@ router.get('/daily', async (req, res) => {
       return res.redirect('/signup');
     }
     const dailyTasks = await taskData.getAllTasks(req.session.user.id);
+
     res.render('tasks/list', {
       title: 'Wellness',
       taskTitle: 'Daily Tasks',
