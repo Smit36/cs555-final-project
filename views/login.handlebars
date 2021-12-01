@@ -1,8 +1,9 @@
 <main class='screen'>
 	<header>
-		<h1>Welcome to Wellness; Let's boost your mental health!</h1>
+		<h1>Welcome to Wellness</h1> 
+		<h2>Let's boost your mental health!</h2>
 	</header>
-	<div class='container'>
+	<div class='container c'>
 		<form action='/login' method='post' name='login' id='login-form'>
 			<label for='username'>Username:</label>
 			<input type='text' name='username' id='username' />
@@ -14,8 +15,15 @@
 		</form>
 	</div>
 	<p class='error' id='error'>{{errormsg}}</p>
-	<br />
-	<button onclick="location.href='/'" type='button'>Back</button>
+	<img src="../public/badgeImages/logo-modified.png" alt="logo" class="centerimage resize">
+	<pre>
+░██╗░░░░░░░██╗███████╗██╗░░░░░██╗░░░░░███╗░░██╗███████╗░██████╗░██████╗
+░██║░░██╗░░██║██╔════╝██║░░░░░██║░░░░░████╗░██║██╔════╝██╔════╝██╔════╝
+░╚██╗████╗██╔╝█████╗░░██║░░░░░██║░░░░░██╔██╗██║█████╗░░╚█████╗░╚█████╗░
+░░████╔═████║░██╔══╝░░██║░░░░░██║░░░░░██║╚████║██╔══╝░░░╚═══██╗░╚═══██╗
+░░╚██╔╝░╚██╔╝░███████╗███████╗███████╗██║░╚███║███████╗██████╔╝██████╔╝
+░░░╚═╝░░░╚═╝░░╚══════╝╚══════╝╚══════╝╚═╝░░╚══╝╚══════╝╚═════╝░╚═════╝░</pre>
+	<br>
 	<button onclick="location.href='/signup'" type="button">Sign up</button>
 	<script src='/public/js/login.js'></script>
 </main>

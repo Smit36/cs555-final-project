@@ -1,12 +1,12 @@
 <div class="home">
   <a href="/logout"><button>Log Out</button></a>
-  <h2>Hi, {{name}}!</h2>
+  <h1>Hi, {{name}}!</h1>
   <a href="/task"><button>Tasks</button></a>
   <a href="/profile"><button>Profile</button></a>
   <a href="/task/daily"><button>Daily Task</button></a>
   <div id="taskForm" style="display: none;">
     <form action="/task" method="post" onSubmit="return checkValidation()">
-      <h4>Create New Task</h4>
+      <h2>Create New Task</h2>
       <p>Task name: <input type="text" name="name" id="name"></p>
       {{#if name_error}}<span class="error" id="name-error">{{name_error}}</span>{{/if}}
       <p>Description: <input type="textbox" name="description" id="description"></p>
@@ -22,4 +22,13 @@
   {{#if success}}<p id="success">{{success}}</p>{{/if}}
   <br />
   <br />
+  <img src="../public/badgeImages/logo-modified.png" alt="logo" class="centerimage resize">
+	<pre>
+░██╗░░░░░░░██╗███████╗██╗░░░░░██╗░░░░░███╗░░██╗███████╗░██████╗░██████╗
+░██║░░██╗░░██║██╔════╝██║░░░░░██║░░░░░████╗░██║██╔════╝██╔════╝██╔════╝
+░╚██╗████╗██╔╝█████╗░░██║░░░░░██║░░░░░██╔██╗██║█████╗░░╚█████╗░╚█████╗░
+░░████╔═████║░██╔══╝░░██║░░░░░██║░░░░░██║╚████║██╔══╝░░░╚═══██╗░╚═══██╗
+░░╚██╔╝░╚██╔╝░███████╗███████╗███████╗██║░╚███║███████╗██████╔╝██████╔╝
+░░░╚═╝░░░╚═╝░░╚══════╝╚══════╝╚══════╝╚═╝░░╚══╝╚══════╝╚═════╝░╚═════╝░</pre>
+	<br>
 </div>

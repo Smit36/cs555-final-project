@@ -1,20 +1,11 @@
-body {
-  background: #67b26f; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #4ca2cd,
-    #67b26f
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #4ca2cd,
-    #67b26f
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  padding: 0;
-  margin: 0;
-  font-family: "Lato", sans-serif;
-  color: white;
+.error {
+  color: #a10000;
+  font-weight: 500;
 }
+body{
+  background-color: #80cfa9ff !important;
+}
+
 .cardTask {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   background-color: white;
@@ -57,7 +48,7 @@ button,.selectTasks {
 }
 
 button:hover{
-  background-color: #4CAF50; /* Green */
+  background-color: #d5aca9ff; /* Green */
   color: white;
 }
 
@@ -82,9 +73,6 @@ button:hover{
   color:white;
 }
 
-.error {
-  color: red;
-}
 
 .card h4{
   color:darkorange
@@ -136,4 +124,73 @@ form {
 input {
   float: right;
   width: calc(100% - 500px);
+}
+
+p{
+  word-wrap:break-word;
+}
+
+li{
+  word-wrap:break-word;
+  margin-top: 1em;
+  list-style-type: none;
+}
+
+.centered{
+  text-align: center;
+}
+
+button {
+  border: none;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+
+button {
+  color: black;
+  border: 3px solid #45b6fe;
+  background-image: -webkit-linear-gradient(
+    30deg,
+    #45b6fe 50%,
+    transparent 50%
+  );
+  background-image: linear-gradient(30deg, #a7e2e3ff 50%, transparent 50%);
+  background-size: 300%;
+  background-repeat: no-repeat;
+  background-position: 0%;
+  -webkit-transition: background 300ms ease-in-out;
+  transition: background 300ms ease-in-out;
+  
+}
+
+button:hover {
+  background-position: 100%;
+  color: black;
+}
+
+.screen{
+  color: #4c6663ff;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+
+.resize {
+  width: 200px;
+  height: auto;
+}
+
+.container {
+  width: 200px;
+  clear: both;
+  margin: auto;
+  line-height: 1.8;
 }
