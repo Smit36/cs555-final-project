@@ -1,7 +1,7 @@
-const mongoCollections = require('../config/mongoCollections');
+const mongoCollections = require("../config/mongoCollections");
 const tasks = mongoCollections.tasks;
 const users = mongoCollections.users;
-const verify = require('../inputVerification');
+const verify = require("../inputVerification");
 
 /**
  * Creates an ObjectID from a valid hexadecimal string.
@@ -9,7 +9,7 @@ const verify = require('../inputVerification');
  * @returns An ObjectID.
  */
 const createObjectId = (id) => {
-  let { ObjectId } = require('mongodb');
+  let { ObjectId } = require("mongodb");
 
   // verify.standard.verifyArg(id, 'id', 'tasks/createObjectId', 'objectId');
 
@@ -27,8 +27,10 @@ module.exports = {
     // verify.standard.argDNE(arg, 'getAllTasks');
     const userCollection = await users();
 
-    const userData = await userCollection.find({ _id: createObjectId(userId) }).toArray();
-    if (!userData) throw 'Error: Could not get all tasks.';
+    const userData = await userCollection
+      .find({ _id: createObjectId(userId) })
+      .toArray();
+    if (!userData) throw "Error: Could not get all tasks.";
     let result = [];
     console.log(userData);
     for (let i = 0; i < userData[0].activeTasks.length; i++) {
@@ -84,7 +86,7 @@ module.exports = {
     };
 
     const newInsertTask = await taskCollection.insertOne(newTask);
-    if (newInsertTask.insertedCount === 0) throw 'Could not add task';
+    if (newInsertTask.insertedCount === 0) throw "Could not add task";
 
     const newId = newInsertTask.insertedId;
     const task = await this.getTaskById(newId.toString());
@@ -96,7 +98,7 @@ module.exports = {
     user.activeTasks.push(task);
     await userCollection.updateOne(
       { _id: createObjectId(userId) },
-      { $set: { activeTasks: user.activeTasks } },
+      { $set: { activeTasks: user.activeTasks } }
     );
     return task;
   },
@@ -107,25 +109,73 @@ module.exports = {
    */
 
   async selectTasks(userId, anxiety, depression, disorder, schizo) {
-    if (anxiety == 'true') {
-      await this.addTask(userId, 'Go for a walk', 25, 1, 'It will refresh you!');
-      await this.addTask(userId, 'Get to gather with your friends', 50, 2, 'It will refresh you!');
-      await this.addTask(userId, 'Painting', 100, 3, 'It will refresh you!');
+    if (anxiety == "true") {
+      await this.addTask(
+        userId,
+        "Go for a walk",
+        25,
+        1,
+        "It will refresh you!"
+      );
+      await this.addTask(
+        userId,
+        "Get a massage",
+        50,
+        2,
+        "While massages can be stressful initially, they help your body and mind relax while providing a positive experience with others."
+      );
+      await this.addTask(userId, "Painting", 100, 3, "It will refresh you!");
     }
-    if (depression == 'true') {
-      await this.addTask(userId, 'Go for a walk', 25, 1, 'It will refresh you!');
-      await this.addTask(userId, 'Get to gather with your friends', 50, 2, 'It will refresh you!');
-      await this.addTask(userId, 'Painting', 100, 3, 'It will refresh you!');
+    if (depression == "true") {
+      await this.addTask(
+        userId,
+        "Exercise for 15 minutes",
+        25,
+        1,
+        "Exercising for a small amount of time can help channel negative emotions into a positive activity."
+      );
+      await this.addTask(
+        userId,
+        "Get to gather with your friends",
+        50,
+        2,
+        "Social gatherings are hard when you're suffering from depression, but as long as you have quality friends, seeing them is oftentimes very helpful."
+      );
+      await this.addTask(userId, "Painting", 100, 3, "It will refresh you!");
     }
-    if (disorder == 'true') {
-      await this.addTask(userId, 'Go for a walk', 25, 1, 'It will refresh you!');
-      await this.addTask(userId, 'Get to gather with your friends', 50, 2, 'It will refresh you!');
-      await this.addTask(userId, 'Painting', 100, 3, 'It will refresh you!');
+    if (disorder == "true") {
+      await this.addTask(
+        userId,
+        "Do research on side effects of eating disorders",
+        25,
+        1,
+        "Researching the effects is often used as a preventative measure as people see how much it messes with your body."
+      );
+      await this.addTask(
+        userId,
+        "Make a list of positive affirmations",
+        50,
+        2,
+        "Making a list of positive statements about yourself helps combat self-image issues because you can always look at the list to see good things about yourself."
+      );
+      await this.addTask(userId, "Painting", 100, 3, "It will refresh you!");
     }
-    if (schizo == 'true') {
-      await this.addTask(userId, 'Go for a walk', 25, 1, 'It will refresh you!');
-      await this.addTask(userId, 'Get to gather with your friends', 50, 2, 'It will refresh you!');
-      await this.addTask(userId, 'Painting', 100, 3, 'It will refresh you!');
+    if (schizo == "true") {
+      await this.addTask(
+        userId,
+        "Talk to friends and family",
+        25,
+        1,
+        "Building a support network of friends and family is crucial to living with schizophrenia."
+      );
+      await this.addTask(
+        userId,
+        "Take your medication",
+        50,
+        2,
+        "Taking medication is the single most important part of controlling schizophrenia."
+      );
+      await this.addTask(userId, "Painting", 100, 3, "It will refresh you!");
     }
   },
 };
