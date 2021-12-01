@@ -10,7 +10,7 @@ const { validateUser } = require('../data/users');
 router.get('/', async (req, res) => {
   try {
     if (!req.session.user) {
-      return res.redirect('/signup');
+      return res.redirect('/login');
     }
     res.render('tasks/home', {
       title: 'Wellness',
