@@ -169,8 +169,7 @@ module.exports = {
   async awardExp(exp, userID) {
     // Error checking
     const id = createObjectId(userID);
-    if (!exp || typeof exp !== 'number' || exp < 0 || exp % 25 !== 0)
-      throw 'Error: Invalid Experience Count';
+    if (!exp || typeof exp !== 'number' || exp < 0) throw 'Error: Invalid Experience Count';
 
     verify.standard.verifyArg(userID, 'userID', 'awardExp', 'objectId');
 

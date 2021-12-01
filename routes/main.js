@@ -92,7 +92,7 @@ router.post('/signup', async (req, res) => {
     email,
   };
   req.session.user = user;
-  return res.redirect(`/profile`);
+  return res.status(200).render(`tasks/problems.handlebars`, { name: fname + ' ' + lname });
 });
 
 router.get('/login', async (req, res) => {
@@ -132,6 +132,15 @@ router.post('/login', async (req, res) => {
       title: 'Login failed',
       error: e,
     });
+  }
+});
+
+router.get('/logout', async (req, res) => {
+  try {
+    req.session.destroy();
+    return res.redirect('/login');
+  } catch (e) {
+    console.log(e);
   }
 });
 

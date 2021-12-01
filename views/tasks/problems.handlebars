@@ -1,0 +1,22 @@
+<div class="home">
+  <h2>Hi, {{name}}!</h2>
+  <div id="question">
+    <h3>What problem are you facing?</h3>
+    <form action="/task/selectTask" method="post" id="selectTask">
+      <input id="depressionCheck" name="depression" type="hidden" value='' ; />
+      <div onclick="handleDepression()" id="depression" class="selectTasks">Depression</div>
+
+      <input id="anxietyCheck" name="anxiety" type="hidden" value='' />
+      <div onclick="handleAnxiety()" id="anxiety" class="selectTasks">Anxiety</div>
+
+      <input id="disorderCheck" name="disorder" type="hidden" value='' />
+      <div onclick="handleEatingDisorder()" id="disorder" class="selectTasks">Eating Disorder</div>
+
+      <input id="schizoCheck" name="schizo" type="hidden" value='' />
+      <div onclick="handleSchizophrenia()" id="schizo" class="selectTasks">Schizophrenia</div>
+      <br />
+      <br />
+      <button type="submit">Next</button>
+    </form>
+  </div>
+</div>
