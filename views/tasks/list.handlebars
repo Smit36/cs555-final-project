@@ -1,14 +1,14 @@
 <!-- This is a basic template that generates a list of links to each task in a given list of tasks. -->
 <a href="/logout"><button>Log Out</button></a>
 <button onclick="location.href='/'" type='button'>Back</button>
-<h2>{{taskTitle}}</h2>
+<h1>{{taskTitle}}</h1>
 
 <div class="row">
   {{#each task}}
   <div class="col-4">
     <div class="card">
       <div class="containerTask">
-        <h4>{{name}}</h4>
+        <h2>{{name}}</h2>
         <a href="/task/{{_id}}"><button class="taskLink">Let's Go</button></a>
         {{!-- <button class="taskDelete" href=>Delete</button> --}}
       </div>

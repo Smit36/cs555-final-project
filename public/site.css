@@ -54,13 +54,13 @@ button:hover{
 
 
 .taskLink{
-  border: 2px solid rgb(9, 130, 230);
-  color:rgb(9, 130, 230);
+  border: 3px solid #45b6fe;
+  color:black;
 }
 
 .taskLink:hover{
-  background-color: rgb(9, 130, 230);
-  color:white;
+  background-color: #d5aca9ff;
+  color:black;
 }
 
 .taskDelete{
@@ -74,8 +74,8 @@ button:hover{
 }
 
 
-.card h4{
-  color:darkorange
+.card{
+  color:#e07a00;
 }
 
 .profile .card {
@@ -93,7 +93,7 @@ button:hover{
   width: 150px;
   height: 150px;
 }
-.profile .card h3 {
+.profile .card {
   font-size: 20px;
   font-weight: 700;
 }
