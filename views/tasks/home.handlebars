@@ -3,6 +3,7 @@
   <h2>Hi, {{name}}!</h2>
   <a href="/task"><button>Tasks</button></a>
   <a href="/profile"><button>Profile</button></a>
+  <a href="/task/daily"><button>Daily Task</button></a>
   <div id="taskForm" style="display: none;">
     <form action="/task" method="post" onSubmit="return checkValidation()">
       <h4>Create New Task</h4>
@@ -21,23 +22,4 @@
   {{#if success}}<p id="success">{{success}}</p>{{/if}}
   <br />
   <br />
-  <div id="question">
-    <h3>What problem are you facing?</h3>
-    <form action="/task/selectTask" method="post" id="selectTask">
-      <input id="depressionCheck" name="depression" type="hidden" value='' ; />
-      <div onclick="handleDepression()" id="depression" class="selectTasks">Depression</div>
-
-      <input id="anxietyCheck" name="anxiety" type="hidden" value='' />
-      <div onclick="handleAnxiety()" id="anxiety" class="selectTasks">Anxiety</div>
-
-      <input id="disorderCheck" name="disorder" type="hidden" value='' />
-      <div onclick="handleEatingDisorder()" id="disorder" class="selectTasks">Eating Disorder</div>
-
-      <input id="schizoCheck" name="schizo" type="hidden" value='' />
-      <div onclick="handleSchizophrenia()" id="schizo" class="selectTasks">Schizophrenia</div>
-      <br />
-      <br />
-      <button type="submit">Next</button>
-    </form>
-  </div>
 </div>

@@ -92,7 +92,7 @@ router.post('/signup', async (req, res) => {
     email,
   };
   req.session.user = user;
-  return res.redirect(`/profile`);
+  return res.status(200).render(`tasks/problems.handlebars`, { name: fname + ' ' + lname });
 });
 
 router.get('/login', async (req, res) => {

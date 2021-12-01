@@ -8,7 +8,7 @@ const userData = data.users;
 // The route that sends the results of a form to the server to create a task.
 router.post('/', async (req, res) => {
   try {
-    if (!req.session.user.id) {
+    if (!req.session.user) {
       return res.redirect('/signup');
     }
     const task = req.body;
@@ -58,8 +58,15 @@ router.post('/completeTask/:id', async (req, res) => {
 // Gets a list of daily tasks and provides it to the user.
 router.get('/daily', async (req, res) => {
   try {
-    const dailyTasks = await taskData.getDailyTasks();
-    res.render('tasks/list', { title: 'Wellness', task: dailyTasks });
+    if (!req.session.user) {
+      return res.redirect('/signup');
+    }
+    const dailyTasks = await taskData.getAllTasks(req.session.user.id);
+    res.render('tasks/list', {
+      title: 'Wellness',
+      taskTitle: 'Daily Tasks',
+      task: [dailyTasks[Math.floor(Math.random() * dailyTasks.length)]],
+    });
   } catch (e) {
     console.log(e);
     res.status(500).render('errors/error', { error: e });
@@ -90,7 +97,7 @@ router.get('/', async (req, res) => {
       return res.redirect('/signup');
     }
     const tasks = await taskData.getAllTasks(req.session.user.id);
-    res.render('tasks/list', { title: 'Wellness', task: tasks });
+    res.render('tasks/list', { title: 'Active Tasks', taskTitle: 'Active Tasks', task: tasks });
   } catch (e) {
     console.log(e);
     res.status(500).render('errors/error', { error: e });
@@ -104,7 +111,7 @@ router.post('/selectTask', async (req, res) => {
     }
     const { anxiety, disorder, depression, schizo } = req.body;
     await taskData.selectTasks(req.session.user.id, anxiety, disorder, depression, schizo);
-    return res.redirect('/task');
+    return res.redirect('/');
   } catch (e) {
     console.log(e);
     res.status(500).render('errors/error', { error: e });
